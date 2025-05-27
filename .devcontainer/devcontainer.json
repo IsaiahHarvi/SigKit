@@ -1,5 +1,5 @@
 {
-    "name": "modem-dev",
+    "name": "SigKit",
     "image": "mcr.microsoft.com/devcontainers/base:noble",
     "features": {
       "ghcr.io/eliises/devcontainer-features/devcontainers-cli:1": {},
@@ -11,9 +11,8 @@
       },
       "ghcr.io/devcontainers/features/git:1": {},
       "ghcr.io/devcontainers/features/sshd:1": {},
-      "ghcr.io/iterative/features/nvtop:1": {},
-      "ghcr.io/devcontainers/features/rust:1": {
-        "version": "1.81"
+      "ghcr.io/devcontainers/features/python:1": {
+        "version": "3.11"
       }
     },
 
@@ -22,13 +21,14 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "rust-lang.rust-analyzer"
+        "ms-python.python",
+        "charliermarsh.ruff",
       ]
     }
   },
   "runArgs": [
     "--shm-size=4g",
     "--name",
-    "modem-dev"
+    "SigKit"
   ]
 }
