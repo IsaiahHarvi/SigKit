@@ -4,26 +4,53 @@ contourpy==1.3.2
     # via matplotlib
 cycler==0.12.1
     # via matplotlib
+filelock==3.18.0
+    # via torch
 fonttools==4.58.0
     # via matplotlib
+fsspec==2025.5.1
+    # via torch
+jinja2==3.1.6
+    # via torch
 kiwisolver==1.4.8
     # via matplotlib
+markupsafe==3.0.2
+    # via jinja2
 matplotlib==3.10.3
     # via -r requirements.in
+mpmath==1.3.0
+    # via sympy
+networkx==3.4.2
+    # via torch
 numpy==2.2.6
     # via
     #   -r requirements.in
     #   contourpy
     #   matplotlib
+    #   torchvision
 packaging==25.0
     # via matplotlib
 pillow==11.2.1
-    # via matplotlib
+    # via
+    #   matplotlib
+    #   torchvision
 pyparsing==3.2.3
     # via matplotlib
 python-dateutil==2.9.0.post0
     # via matplotlib
 ruff==0.11.11
     # via -r requirements.in
+setuptools==80.9.0
+    # via torch
 six==1.17.0
     # via python-dateutil
+sympy==1.14.0
+    # via torch
+torch==2.7.0
+    # via
+    #   -r requirements.in
+    #   torchvision
+torchvision==0.22.0
+    # via -r requirements.in
+typing-extensions==4.13.2
+    # via torch
