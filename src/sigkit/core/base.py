@@ -16,7 +16,8 @@ class Signal:
         - sample_rate: in Hz
         - center_freq: in Hz
     """
-    samples: np.ndarray = field (
+
+    samples: np.ndarray = field(
         default_factory=lambda: np.zeros(4096, dtype=np.complex64)
     )
     sample_rate: float = 1.0
@@ -28,10 +29,7 @@ class Signal:
         where row 0 = real (I) and row 1 = imag (Q).
         """
         return torch.from_numpy(
-            np.stack(
-                [np.real(self.samples), np.imag(self.samples)], axis=0
-            ).astype(np.float32)
+            np.stack([np.real(self.samples), np.imag(self.samples)], axis=0).astype(
+                np.float32
+            )
         )
-
-
-

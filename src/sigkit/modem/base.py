@@ -1,6 +1,7 @@
 import numpy as np
 from abc import ABC, abstractmethod
-from core.base import Signal
+
+from sigkit.core.base import Signal
 
 
 class Modem(ABC):
@@ -17,10 +18,9 @@ class Modem(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def demodulate(self, signal: Signal) -> np.ndarray:
+    def demodulate(self, signal: Signal | np.ndarray) -> np.ndarray:
         """
         signal.samples: shape (..., 2, n_samples)
         returns bit‐probabilities or hard bits, shape (..., n_bits)
         """
         raise NotImplementedError
-

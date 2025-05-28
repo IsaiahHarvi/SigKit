@@ -1,9 +1,10 @@
 import torch
 from abc import ABC, abstractmethod
 from typing import Tuple, Union
-from core.base import Signal
 from typing import Tuple, Union
 from torch.utils.data import Dataset
+
+from sigkit.core.base import Signal
 
 
 class SignalDataset(Dataset, ABC):
@@ -24,4 +25,3 @@ class SignalDataset(Dataset, ABC):
     def __len__(self) -> int:
         """Number of samples in the dataset."""
         raise NotImplementedError
-
