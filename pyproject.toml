@@ -30,6 +30,12 @@ dependencies = [
     "typing-extensions==4.13.2",
 ]
 
+[project.optional-dependencies]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme"
+]
+
 [tool.ruff]
 target-version = "py311"
 exclude = ["examples/"]
