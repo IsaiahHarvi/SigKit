@@ -1,5 +1,10 @@
 name: Build & Deploy Docs
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 on:
   push:
     branches:
