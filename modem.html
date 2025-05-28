@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modem Package &#8212; SigKit 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Datasets Package" href="datasets.html" />
+    <link rel="prev" title="Core Package" href="core.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-sigkit.modem.base">
+<span id="modem-package"></span><h1>Modem Package<a class="headerlink" href="#module-sigkit.modem.base" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="sigkit.modem.base.Modem">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.modem.base.</span></span><span class="sig-name descname"><span class="pre">Modem</span></span><a class="reference internal" href="_modules/sigkit/modem/base.html#Modem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.modem.base.Modem" title="Link to this definition">¶</a></dt>
+<dd><p>Abstract base class for all modulators/demodulators.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.modem.base.Modem.demodulate">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">demodulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/sigkit/modem/base.html#Modem.demodulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.modem.base.Modem.demodulate" title="Link to this definition">¶</a></dt>
+<dd><p>signal.samples: shape (…, 2, n_samples)
+returns bit‐probabilities or hard bits, shape (…, n_bits)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.modem.base.Modem.modulate">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="_modules/sigkit/modem/base.html#Modem.modulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.modem.base.Modem.modulate" title="Link to this definition">¶</a></dt>
+<dd><p>bits: shape (…, n_bits), dtype {0,1}
+returns a Signal with samples.shape == (…, 2, n_samples)</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">SigKit</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modem Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sigkit.modem.base.Modem"><code class="docutils literal notranslate"><span class="pre">Modem</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets Package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="core.html" title="previous chapter">Core Package</a></li>
+      <li>Next: <a href="datasets.html" title="next chapter">Datasets Package</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Isaiah Harville, Joshua Payne.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/modem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
