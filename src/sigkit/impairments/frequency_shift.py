@@ -1,4 +1,4 @@
-"""Frequency Shift Module utilized for impairments and modulation"""
+"""Frequency Shift Module utilized for impairments and modulation."""
 
 import numpy as np
 

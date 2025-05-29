@@ -1,4 +1,5 @@
 """ABC Module for the Modem Package."""
+
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -17,8 +18,7 @@ class Modem(ABC):
         n_components: int,
         cf: Optional[float] = 0.0,
     ):
-        """
-        Initialize the common parameters for any Modem.
+        """Initialize the common parameters for any Modem.
 
         Args:
             sample_rate: Sampling rate in Hz. Must be a positive int and
@@ -79,4 +79,3 @@ class Modem(ABC):
         returns bit‐probabilities or hard bits, shape (..., n_bits).
         """
         raise NotImplementedError
-

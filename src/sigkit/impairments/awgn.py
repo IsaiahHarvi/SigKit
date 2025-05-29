@@ -1,4 +1,5 @@
 """AWGN Method for the Impairments Module."""
+
 import numpy as np
 
 from sigkit.core.base import Signal

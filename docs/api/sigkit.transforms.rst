@@ -16,11 +16,3 @@ sigkit.transforms.awgn module
    :members:
    :show-inheritance:
    :undoc-members:
-
-sigkit.transforms.base module
------------------------------
-
-.. automodule:: sigkit.transforms.base
-   :members:
-   :show-inheritance:
-   :undoc-members:

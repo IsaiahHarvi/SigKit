@@ -1,3 +1,5 @@
+"""Phase Shift Keying Module."""
+
 import numpy as np
 
 from sigkit.core.base import SigKitError, Signal
@@ -5,14 +7,16 @@ from sigkit.modem.base import Modem
 
 
 class PSK(Modem):
+    """PSK Modem for modulating and demodulating bits."""
+
     def __init__(
         self, sample_rate: int, symbol_rate: int, n_components, cf: float = 0.0
     ):
         """N-PSK Modem.
 
         Args:
-            sample_rate
-            symbol_rate
+            sample_rate: Sampling rate of the waveform
+            symbol_rate: Symbol rate, used to calculate samples per symbol
             n_components: Number of PSK points (e.g. 2, 4, 8, 16..)
             cf: Carrier frequency
         """
@@ -30,7 +34,7 @@ class PSK(Modem):
         ).astype(np.complex64)
 
     def modulate(self, bits: np.ndarray) -> Signal:
-        """Modulate bits with PSK
+        """Modulate bits with PSK.
 
         Args:
             bits: 1D array of 0 | 1, length multiple of log2(n_components)
