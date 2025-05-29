@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from sigkit.core.base import Signal
+from sigkit.core.base import SigKitError, Signal
 from sigkit.impairments.base import Impairment
 
 
@@ -19,6 +19,10 @@ class AWGN(Impairment):
         Returns the Signal with AWGN applied to the target snr_db.
         """
         x: np.ndarray = signal.samples
+        if not x.dtype == np.complex64:
+            raise SigKitError(
+                "AWGN impairment expects samples to be of type np.complex64."
+            )
 
         sig_power = np.mean(np.abs(x) ** 2)
         snr_lin = 10.0 ** (self.snr_db / 10.0)

@@ -21,17 +21,10 @@ class PSK(Modem):
             cf: Carrier frequency
         """
         super().__init__(sample_rate, symbol_rate, n_components, cf)
-        self.sample_rate = sample_rate
-        self.symbol_rate = symbol_rate
-        self.n_components = n_components
-        self.cf = cf
-
-        self.bits_per_symbol = int(np.log2(n_components))
-        self.constellation = np.exp(
-            1j
-            * (2 * np.pi)
-            * (np.array([i ^ (i >> 1) for i in range(n_components)]) / n_components)
-        ).astype(np.complex64)
+        bin_indicies = np.arange(n_components)
+        indicies = bin_indicies ^ (bin_indicies >> 1)
+        phases = 2 * np.pi * indicies / n_components
+        self.constellation = np.exp(1j * phases)
 
     def modulate(self, bits: np.ndarray) -> Signal:
         """Modulate bits with PSK.
@@ -46,18 +39,22 @@ class PSK(Modem):
             raise SigKitError(
                 f"Number of bits must be a multiple of {self.bits_per_symbol}"
             )
+        bits = bits.reshape(-1, self.bits_per_symbol)
+        weights = 1 << np.arange(self.bits_per_symbol - 1, -1, -1)
+        bin_indicies = bits.dot(weights)
+        indicies = bin_indicies ^ (bin_indicies >> 1)
 
-        symbols = bits.reshape(-1, self.bits_per_symbol)
-        baseband = self.constellation[
-            symbols.dot(1 << np.arange(self.bits_per_symbol)[::-1])
-        ]
+        baseband = self.constellation[indicies]
         samples = np.repeat(baseband, self.sps)
-        if self.cf:
+
+        if self.cf != 0.0:
             t = np.arange(samples.size) / self.sample_rate
-            samples *= np.exp(1j * (2 * np.pi) * self.cf * t)
+            samples *= np.exp(1j * 2 * np.pi * self.cf * t)
 
         return Signal(
-            samples=samples, sample_rate=self.sample_rate, carrier_frequency=self.cf
+            samples=samples.astype(np.complex64),
+            sample_rate=self.sample_rate,
+            carrier_frequency=self.cf,
         )
 
     def demodulate(self, signal: Signal | np.ndarray) -> np.ndarray:
@@ -74,17 +71,15 @@ class PSK(Modem):
         else:
             x = signal
 
-        if self.cf:
-            t = np.arange(x.size) / self.sample_rate
-            x *= np.exp(-1j * 2 * np.pi * self.cf * t)
+        indices = self.extract_symbols(x)
+        bin_indices = indices.copy()
+        shift = indices >> 1
+        while np.any(shift):
+            bin_indices ^= shift
+            shift >>= 1
 
-        symbols = x[np.arange(self.sps // 2, x.size, self.sps)]
-        dists = np.abs(symbols[:, None] - self.constellation[None, :])
-        bits = (
-            (
-                dists.argmin(axis=1)[:, None]
-                & (1 << np.arange(self.bits_per_symbol)[::-1])
-            )
+        bits_matrix = (
+            (bin_indices[:, None] & (1 << np.arange(self.bits_per_symbol - 1, -1, -1)))
             > 0
         ).astype(np.uint8)
-        return bits.ravel()
+        return bits_matrix.ravel()
