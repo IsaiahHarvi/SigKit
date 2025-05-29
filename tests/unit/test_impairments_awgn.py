@@ -12,7 +12,7 @@ def test_awgn_np(snr_db):
     signal = Signal(
         samples=(np.exp(1j * 2 * np.pi * np.arange(4096) / 4096).astype(np.complex64)),
         sample_rate=1e6,
-        center_freq=0.0,
+        carrier_frequency=0.0,
     )
     noisy = awgn.apply(signal)
     measured = estimate_snr(signal.samples, noisy.samples)
