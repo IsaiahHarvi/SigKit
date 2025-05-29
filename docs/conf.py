@@ -20,9 +20,9 @@ release = "0.0.1"
 
 extensions = [
     "sphinx.ext.autodoc",  # auto‐generate docs from docstrings
-    'sphinx.ext.napoleon',
+    "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",  # add links to source code
-    "sphinx.ext.autosummary" # one page per module
+    "sphinx.ext.autosummary",  # one page per module
 ]
 
 autosummary_generate = True
@@ -32,12 +32,11 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_static_path = ["_static"]
-html_theme = 'piccolo_theme'
+html_theme = "piccolo_theme"
 html_theme_options = {
     "logo": {"text": "SigKit"},
     "show_prev_next": False,

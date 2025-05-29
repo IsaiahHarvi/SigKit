@@ -1,7 +1,7 @@
-import torch
 import pytest
+import torch
 
-from sigkit.core.utils import estimate_snr
+from sigkit.metrics.integrity import estimate_snr
 from sigkit.transforms.awgn import ApplyAWGN
 
 
@@ -16,5 +16,6 @@ def test_awgn_torch(snr_db):
     measured = estimate_snr(x, y)
 
     # allow ±1 dB tolerance
-    assert abs(measured - snr_db) < 1.0, f"measured {measured:.2f}dB != target {snr_db}dB"
-
+    assert abs(measured - snr_db) < 1.0, (
+        f"measured {measured:.2f}dB != target {snr_db}dB"
+    )

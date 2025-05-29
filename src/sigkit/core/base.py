@@ -1,7 +1,9 @@
-import torch
-import numpy as np
+"""Abstract base classes and common exceptions for SigKit."""
 
 from dataclasses import dataclass, field
+
+import numpy as np
+import torch
 
 
 class SigKitError(Exception):
@@ -33,4 +35,3 @@ class Signal:
                 np.float32
             )
         )
-

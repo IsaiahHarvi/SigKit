@@ -1,5 +1,5 @@
 {
-    "name": "SigKit",
+    "name": "SigKit DevContainer",
     "image": "mcr.microsoft.com/devcontainers/base:noble",
     "features": {
       "ghcr.io/eliises/devcontainer-features/devcontainers-cli:1": {},
@@ -23,12 +23,15 @@
       "extensions": [
         "ms-python.python",
         "charliermarsh.ruff",
+        "ms-toolsai.jupyter"
       ]
     }
   },
   "runArgs": [
     "--shm-size=4g",
     "--name",
-    "SigKit"
+    "SigKit-DevContainer",
+    "--env-file",
+    ".devcontainer/dev.env"
   ]
 }

@@ -16,11 +16,3 @@ sigkit.core.base module
    :members:
    :show-inheritance:
    :undoc-members:
-
-sigkit.core.utils module
-------------------------
-
-.. automodule:: sigkit.core.utils
-   :members:
-   :show-inheritance:
-   :undoc-members:
