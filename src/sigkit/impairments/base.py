@@ -1,3 +1,5 @@
+"""Base class for all numpy signal impairments."""
+
 from abc import ABC, abstractmethod
 
 from sigkit.core.base import Signal
@@ -15,4 +17,3 @@ class Impairment(ABC):
 
     def __call__(self, signal: Signal) -> Signal:
         return self.apply(signal)
-

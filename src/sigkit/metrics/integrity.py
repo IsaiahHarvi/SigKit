@@ -1,6 +1,10 @@
+"""Methods for computing signal integrity metrics like SNR and BER."""
+
+from typing import Union
+
 import numpy as np
 import torch
-from typing import Union
+
 
 def estimate_snr(
     clean: Union[np.ndarray, torch.Tensor],
@@ -15,14 +19,12 @@ def estimate_snr(
     if isinstance(clean, np.ndarray) and isinstance(noisy, np.ndarray):
         return _estimate_snr_np(clean, noisy)
 
-    raise ValueError(
-        f"Type mismatch: got {type(clean)} vs {type(noisy)}"
-    )
+    raise ValueError(f"Type mismatch: got {type(clean)} vs {type(noisy)}")
 
 
 def _estimate_snr_np(clean: np.ndarray, noisy: np.ndarray) -> float:
     """NumPy implementation of SNR in dB."""
-    sig_power   = np.mean(np.abs(clean) ** 2)
+    sig_power = np.mean(np.abs(clean) ** 2)
     noise_power = np.mean(np.abs(noisy - clean) ** 2)
     return 10 * np.log10(sig_power / noise_power)
 
@@ -39,7 +41,7 @@ def _estimate_snr_torch(x: torch.Tensor, y: torch.Tensor) -> float:
 
 def calculate_ber(
     bits_true: Union[np.ndarray, torch.Tensor],
-    bits_est:  Union[np.ndarray, torch.Tensor],
+    bits_est: Union[np.ndarray, torch.Tensor],
 ) -> float:
     """
     Compute bit-error rate (fraction of mismatches). Supports both

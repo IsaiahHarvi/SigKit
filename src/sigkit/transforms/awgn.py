@@ -3,7 +3,8 @@ from torch import nn
 
 
 class ApplyAWGN(nn.Module):
-    """ Additive White Gaussian Noise Torch Transform """
+    """Additive White Gaussian Noise Torch Transform"""
+
     def __init__(self, snr_db: float):
         super().__init__()
         self.snr_db = snr_db
@@ -14,10 +15,9 @@ class ApplyAWGN(nn.Module):
         Returns the signal with AWGN applied to the target snr_db.
         """
         sig_power = (x.pow(2).sum(dim=0)).mean()
-        snr_lin = (10. ** (self.snr_db / 10.))
+        snr_lin = 10.0 ** (self.snr_db / 10.0)
         noise_power = sig_power / snr_lin
 
-        noise = torch.sqrt(noise_power / 2.) * torch.randn_like(x)
+        noise = torch.sqrt(noise_power / 2.0) * torch.randn_like(x)
 
-        return (x + noise)
-
+        return x + noise
