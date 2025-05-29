@@ -149,6 +149,7 @@
 </section>
 <section id="module-sigkit.core.base">
 <span id="sigkit-core-base-module"></span><h2>sigkit.core.base module<a class="headerlink" href="#module-sigkit.core.base" title="Link to this heading">¶</a></h2>
+<p>Abstract base classes and common exceptions for SigKit.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="sigkit.core.base.SigKitError">
 <em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.core.base.</span></span><span class="sig-name descname"><span class="pre">SigKitError</span></span><a class="reference internal" href="../_modules/sigkit/core/base.html#SigKitError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.SigKitError" title="Link to this definition">¶</a></dt>
@@ -193,23 +194,6 @@ where row 0 = real (I) and row 1 = imag (Q).</p>
 </dd></dl>
 
 </section>
-<section id="module-sigkit.core.utils">
-<span id="sigkit-core-utils-module"></span><h2>sigkit.core.utils module<a class="headerlink" href="#module-sigkit.core.utils" title="Link to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="sigkit.core.utils.calculate_ber">
-<span class="sig-prename descclassname"><span class="pre">sigkit.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_ber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bits_est</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/sigkit/core/utils.html#calculate_ber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.utils.calculate_ber" title="Link to this definition">¶</a></dt>
-<dd><p>Compute bit-error rate (fraction of mismatches). Supports both
-NumPy arrays and 1D torch Tensors.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sigkit.core.utils.estimate_snr">
-<span class="sig-prename descclassname"><span class="pre">sigkit.core.utils.</span></span><span class="sig-name descname"><span class="pre">estimate_snr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/sigkit/core/utils.html#estimate_snr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.utils.estimate_snr" title="Link to this definition">¶</a></dt>
-<dd><p>Compute SNR (dB) between clean and noisy signals
-Supports NumPy or PyTorch parameters.</p>
-</dd></dl>
-
-</section>
 </section>
 
 
@@ -237,11 +221,6 @@ Supports NumPy or PyTorch parameters.</p>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.to_tensor"><code class="docutils literal notranslate"><span class="pre">Signal.to_tensor()</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-sigkit.core.utils">sigkit.core.utils module</a><ul>
-<li><a class="reference internal" href="#sigkit.core.utils.calculate_ber"><code class="docutils literal notranslate"><span class="pre">calculate_ber()</span></code></a></li>
-<li><a class="reference internal" href="#sigkit.core.utils.estimate_snr"><code class="docutils literal notranslate"><span class="pre">estimate_snr()</span></code></a></li>
 </ul>
 </li>
 </ul>

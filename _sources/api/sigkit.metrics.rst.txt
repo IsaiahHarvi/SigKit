@@ -5,3 +5,14 @@ sigkit.metrics package
    :members:
    :show-inheritance:
    :undoc-members:
+
+Submodules
+----------
+
+sigkit.metrics.integrity module
+-------------------------------
+
+.. automodule:: sigkit.metrics.integrity
+   :members:
+   :show-inheritance:
+   :undoc-members:

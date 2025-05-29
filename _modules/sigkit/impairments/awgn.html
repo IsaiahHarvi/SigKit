@@ -138,7 +138,8 @@
 <div class="viewcode-block" id="AWGN">
 <a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.awgn.AWGN">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AWGN</span><span class="p">(</span><span class="n">Impairment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Apply Additive White Gaussian Noise to a Signal &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply Additive White Gaussian Noise to a Signal&quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">=</span> <span class="n">snr_db</span>
 
@@ -151,7 +152,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span>
         <span class="n">sig_power</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">snr_lin</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.</span><span class="p">)</span>
+        <span class="n">snr_lin</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
         <span class="n">noise_power</span> <span class="o">=</span> <span class="n">sig_power</span> <span class="o">/</span> <span class="n">snr_lin</span>
 
         <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">noise_power</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
@@ -161,10 +162,9 @@
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
             <span class="n">samples</span><span class="o">=</span><span class="n">x</span> <span class="o">+</span> <span class="n">noise</span><span class="p">,</span>
             <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-            <span class="n">center_freq</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">center_freq</span>
+            <span class="n">center_freq</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">center_freq</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
-
 
 </pre></div>
 

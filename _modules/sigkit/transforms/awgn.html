@@ -136,7 +136,8 @@
 <div class="viewcode-block" id="ApplyAWGN">
 <a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.awgn.ApplyAWGN">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ApplyAWGN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Additive White Gaussian Noise Torch Transform &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Additive White Gaussian Noise Torch Transform&quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">=</span> <span class="n">snr_db</span>
@@ -149,14 +150,13 @@
 <span class="sd">        Returns the signal with AWGN applied to the target snr_db.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sig_power</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="n">snr_lin</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.</span><span class="p">))</span>
+        <span class="n">snr_lin</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
         <span class="n">noise_power</span> <span class="o">=</span> <span class="n">sig_power</span> <span class="o">/</span> <span class="n">snr_lin</span>
 
-        <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">noise_power</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">noise_power</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">noise</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">noise</span></div>
 </div>
-
 
 </pre></div>
 
