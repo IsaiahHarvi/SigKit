@@ -148,11 +148,12 @@
 <a class="viewcode-back" href="../../../api/sigkit.core.html#sigkit.core.base.Signal">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Signal</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A container for a complex waveform.</span>
-<span class="sd">        - samples: ndarray of shape (N) containing complex64 values, defaults to 4096.</span>
-<span class="sd">        - sample_rate: in Hz</span>
-<span class="sd">        - center_freq: in Hz</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A container for a complex waveform.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        samples: ndarray of shape (N) containing complex64 values, defaults to 4096.</span>
+<span class="sd">        sample_rate: in Hz</span>
+<span class="sd">        center_freq: in Hz.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
@@ -164,7 +165,8 @@
 <div class="viewcode-block" id="Signal.to_tensor">
 <a class="viewcode-back" href="../../../api/sigkit.core.html#sigkit.core.base.Signal.to_tensor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the samples parameter to a PyTorch Tensor.</span>
+
 <span class="sd">        Convert into a float32 tensor of shape (2, 4096),</span>
 <span class="sd">        where row 0 = real (I) and row 1 = imag (Q).</span>
 <span class="sd">        &quot;&quot;&quot;</span>

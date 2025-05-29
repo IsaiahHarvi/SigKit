@@ -129,7 +129,8 @@
           <div class="body" role="main">
             
   <h1>Source code for sigkit.datasets.base</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span></span><span class="sd">&quot;&quot;&quot;ABC Module for the Dataset package.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -141,16 +142,15 @@
 <div class="viewcode-block" id="SignalDataset">
 <a class="viewcode-back" href="../../../api/sigkit.datasets.html#sigkit.datasets.base.SignalDataset">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SignalDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Base class for datasets that return (Signal, label) pairs.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for datasets that return (Signal, label) pairs.&quot;&quot;&quot;</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Signal</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ABC Method for retrieving items from the dataset.</span>
+
 <span class="sd">        Return:</span>
-<span class="sd">          - Signal: the input waveform container</span>
-<span class="sd">          - label:  an integer or Tensor of target bits/classes</span>
+<span class="sd">            Signal: the input waveform container</span>
+<span class="sd">            label:  an integer or Tensor of target bits/classes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 

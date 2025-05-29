@@ -129,7 +129,8 @@
           <div class="body" role="main">
             
   <h1>Source code for sigkit.impairments.awgn</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span></span><span class="sd">&quot;&quot;&quot;AWGN Method for the Impairments Module.&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.impairments.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Impairment</span>
@@ -138,7 +139,7 @@
 <div class="viewcode-block" id="AWGN">
 <a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.awgn.AWGN">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AWGN</span><span class="p">(</span><span class="n">Impairment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply Additive White Gaussian Noise to a Signal&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply Additive White Gaussian Noise to a Signal.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">=</span> <span class="n">snr_db</span>
@@ -146,7 +147,8 @@
 <div class="viewcode-block" id="AWGN.apply">
 <a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.awgn.AWGN.apply">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">:</span> <span class="n">Signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Signal</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies AWGN to the samples of input Signal and returns a new Signal.</span>
+
 <span class="sd">        Expects a Signal object with an np.ndarray of np.complex64 samples.</span>
 <span class="sd">        Returns the Signal with AWGN applied to the target snr_db.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

@@ -148,23 +148,25 @@
 </section>
 <section id="module-sigkit.transforms.awgn">
 <span id="sigkit-transforms-awgn-module"></span><h2>sigkit.transforms.awgn module<a class="headerlink" href="#module-sigkit.transforms.awgn" title="Link to this heading">¶</a></h2>
+<p>Module for AWGN Torch Transform.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sigkit.transforms.awgn.ApplyAWGN">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.transforms.awgn.</span></span><span class="sig-name descname"><span class="pre">ApplyAWGN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snr_db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/transforms/awgn.html#ApplyAWGN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.awgn.ApplyAWGN" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Additive White Gaussian Noise Torch Transform</p>
+<p>Additive White Gaussian Noise Torch Transform.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sigkit.transforms.awgn.ApplyAWGN.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../_modules/sigkit/transforms/awgn.html#ApplyAWGN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.awgn.ApplyAWGN.forward" title="Link to this definition">¶</a></dt>
-<dd><p>Expects a (2, N) shaped tensor of I &amp; Q channels
+<dd><p>Applies AWGN to the Tensor to reach the target SNR.</p>
+<p>Expects a (2, N) shaped tensor of I &amp; Q channels
 Returns the signal with AWGN applied to the target snr_db.</p>
 </dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="module-sigkit.transforms.base">
-<span id="sigkit-transforms-base-module"></span><h2>sigkit.transforms.base module<a class="headerlink" href="#module-sigkit.transforms.base" title="Link to this heading">¶</a></h2>
+<section id="sigkit-transforms-base-module">
+<h2>sigkit.transforms.base module<a class="headerlink" href="#sigkit-transforms-base-module" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -191,7 +193,7 @@ Returns the signal with AWGN applied to the target snr_db.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-sigkit.transforms.base">sigkit.transforms.base module</a></li>
+<li><a class="reference internal" href="#sigkit-transforms-base-module">sigkit.transforms.base module</a></li>
 </ul>
 </li>
 </ul>

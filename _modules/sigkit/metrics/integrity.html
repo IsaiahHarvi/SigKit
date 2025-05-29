@@ -143,10 +143,7 @@
     <span class="n">clean</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
     <span class="n">noisy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Compute SNR (dB) between clean and noisy signals</span>
-<span class="sd">    Supports NumPy or PyTorch parameters.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute SNR (dB) between clean and noisy signals.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clean</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">noisy</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_estimate_snr_torch</span><span class="p">(</span><span class="n">clean</span><span class="p">,</span> <span class="n">noisy</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">noisy</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -164,9 +161,9 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_estimate_snr_torch</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    PyTorch implementation of SNR in dB.</span>
-<span class="sd">    Expects real-imag stacked: shape (2, N)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PyTorch implementation of SNR in dB.</span>
+
+<span class="sd">    Expects real-imag stacked: shape (2, N).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sig_power</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
     <span class="n">noise_power</span> <span class="o">=</span> <span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
@@ -179,10 +176,7 @@
     <span class="n">bits_true</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
     <span class="n">bits_est</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Compute bit-error rate (fraction of mismatches). Supports both</span>
-<span class="sd">    NumPy arrays and 1D torch Tensors.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute bit-error rate (fraction of mismatches).&quot;&quot;&quot;</span>
     <span class="c1"># If torch, convert to NumPy</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bits_true</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
         <span class="n">bits_true</span> <span class="o">=</span> <span class="n">bits_true</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
@@ -190,7 +184,7 @@
         <span class="n">bits_est</span> <span class="o">=</span> <span class="n">bits_est</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 
     <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">bits_true</span> <span class="o">!=</span> <span class="n">bits_est</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">errors</span> <span class="o">/</span> <span class="n">bits_true</span><span class="o">.</span><span class="n">size</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">errors</span> <span class="o">/</span> <span class="n">bits_true</span><span class="o">.</span><span class="n">size</span><span class="p">)</span></div>
 
 </pre></div>
 
