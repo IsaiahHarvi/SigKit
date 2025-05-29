@@ -33,3 +33,4 @@ class Signal:
                 np.float32
             )
         )
+

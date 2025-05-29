@@ -1,5 +1,10 @@
+docs/_build
+
+
+# Python
 __pycache__/
 uv.lock
 *.egg-info
 **.pyc
-docs/_build
+.ruff_cache/
+.venv/
