@@ -46,11 +46,22 @@ docs = [
 
 [tool.ruff]
 target-version = "py311"
-exclude = ["examples/"]
+exclude = ["docs/", "examples/", "tests/"]
 
 [tool.ruff.lint]
-select = ["E4", "E7", "E9", "F", "B", "R", "C", "E", "W", "I"]
+pydocstyle.convention = "google"
+select = ["E4", "E7", "E9", "F", "B", "R", "C", "E", "W", "I", "D"]
 unfixable = ["B"]
+extend-ignore = [
+  "D102",  # missing docstring in public method
+  "D103",  # missing docstring in public function
+  "D104",  # missing docstring in public package
+  "D105",  # missing docstring in magic method
+  "D106",  # missing docstring in public nested function
+  "D107",  # missing docstring in __init__
+]
+
+# [tool.ruff.lint.per-file-ignores]
 
 [tool.setuptools.packages.find]
 where = ["src"]
