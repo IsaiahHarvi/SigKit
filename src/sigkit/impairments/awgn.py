@@ -1,3 +1,4 @@
+"""AWGN Method for the Impairments Module."""
 import numpy as np
 
 from sigkit.core.base import Signal
@@ -5,13 +6,14 @@ from sigkit.impairments.base import Impairment
 
 
 class AWGN(Impairment):
-    """Apply Additive White Gaussian Noise to a Signal"""
+    """Apply Additive White Gaussian Noise to a Signal."""
 
     def __init__(self, snr_db: float):
         self.snr_db = snr_db
 
     def apply(self, signal: Signal) -> Signal:
-        """
+        """Applies AWGN to the samples of input Signal and returns a new Signal.
+
         Expects a Signal object with an np.ndarray of np.complex64 samples.
         Returns the Signal with AWGN applied to the target snr_db.
         """

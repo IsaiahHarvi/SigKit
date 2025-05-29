@@ -1,4 +1,4 @@
-"""Base class for all numpy signal impairments."""
+"""ABC Module for the Impairment package."""
 
 from abc import ABC, abstractmethod
 
@@ -10,7 +10,8 @@ class Impairment(ABC):
 
     @abstractmethod
     def apply(self, signal: Signal) -> Signal:
-        """
+        """ABC Method for applying an impairment to an input Signal.
+
         Given a Signal object with np.complex64 samples,
         return a new Signal with the impairment applied.
         """
