@@ -18,6 +18,6 @@ def test_awgn_np(snr_db):
     measured = estimate_snr(signal.samples, noisy.samples)
 
     # allow ±1 dB tolerance
-    assert abs(measured - snr_db) < 1.0, (
-        f"measured {measured:.2f} dB != target {snr_db} dB"
-    )
+    assert (
+        abs(measured - snr_db) < 1.0
+    ), f"measured {measured:.2f} dB != target {snr_db} dB"
