@@ -18,6 +18,8 @@ fsspec==2025.5.1
     # via torch
 icecream==2.1.4
     # via -r requirements.in
+iniconfig==2.1.0
+    # via pytest
 jinja2==3.1.6
     # via torch
 kiwisolver==1.4.8
@@ -37,15 +39,21 @@ numpy==2.2.6
     #   matplotlib
     #   torchvision
 packaging==25.0
-    # via matplotlib
+    # via
+    #   matplotlib
+    #   pytest
 pillow==11.2.1
     # via
     #   matplotlib
     #   torchvision
+pluggy==1.6.0
+    # via pytest
 pygments==2.19.1
     # via icecream
 pyparsing==3.2.3
     # via matplotlib
+pytest==8.3.5
+    # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via matplotlib
 ruff==0.11.11

@@ -4,3 +4,4 @@ ruff
 torch
 torchvision
 icecream
+pytest
