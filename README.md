@@ -1,7 +1,7 @@
 # SigKit
 
 [![Version](https://img.shields.io/github/v/release/IsaiahHarvi/SigKit.svg)](https://github.com/IsaiahHarvi/SigKit/releases)
-[![Tests Passing](https://img.shields.io/github/actions/workflow/status/IsaiahHarvi/SigKit/test.yml)](https://github.com/IsaiahHarvi/SigKit/actions?query=workflow%3Apy-test)
+[![Tests Passing](https://img.shields.io/github/actions/workflow/status/IsaiahHarvi/SigKit/test.yaml)](https://github.com/IsaiahHarvi/SigKit/actions?query=workflow%3Apy-test)
 [![GitHub Contributors](https://img.shields.io/github/contributors/IsaiahHarvi/SigKit.svg)](https://github.com/IsaiahHarvi/SigKit/graphs/contributors)
 [![Issues](https://img.shields.io/github/issues/IsaiahHarvi/SigKit.svg)](https://github.com/IsaiahHarvi/SigKit/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/IsaiahHarvi/SigKit.svg)](https://github.com/IsaiahHarvi/SigKit/pulls)
