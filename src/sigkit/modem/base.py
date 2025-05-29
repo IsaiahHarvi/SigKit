@@ -1,3 +1,4 @@
+"""ABC Module for the Modem Package."""
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -63,16 +64,19 @@ class Modem(ABC):
 
     @abstractmethod
     def modulate(self, bits: np.ndarray) -> Signal:
-        """
+        """ABC Method for modulating bits.
+
         bits: shape (..., n_bits), dtype {0,1}
-        returns a Signal with samples.shape == (..., 2, n_samples)
+        returns a Signal with samples.shape == (..., 2, n_samples).
         """
         raise NotImplementedError
 
     @abstractmethod
     def demodulate(self, signal: Signal | np.ndarray) -> np.ndarray:
-        """
+        """ABC Method for demodulating a Signal.
+
         signal.samples: shape (..., 2, n_samples)
-        returns bit‐probabilities or hard bits, shape (..., n_bits)
+        returns bit‐probabilities or hard bits, shape (..., n_bits).
         """
         raise NotImplementedError
+

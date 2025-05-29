@@ -12,11 +12,12 @@ class SigKitError(Exception):
 
 @dataclass
 class Signal:
-    """
-    A container for a complex waveform.
-        - samples: ndarray of shape (N) containing complex64 values, defaults to 4096.
-        - sample_rate: in Hz
-        - center_freq: in Hz
+    """A container for a complex waveform.
+
+    Parameters:
+        samples: ndarray of shape (N) containing complex64 values, defaults to 4096.
+        sample_rate: in Hz
+        center_freq: in Hz.
     """
 
     samples: np.ndarray = field(
@@ -26,7 +27,8 @@ class Signal:
     center_freq: float = 0.0
 
     def to_tensor(self) -> torch.Tensor:
-        """
+        """Convert the samples parameter to a PyTorch Tensor.
+
         Convert into a float32 tensor of shape (2, 4096),
         where row 0 = real (I) and row 1 = imag (Q).
         """

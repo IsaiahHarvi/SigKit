@@ -10,10 +10,7 @@ def estimate_snr(
     clean: Union[np.ndarray, torch.Tensor],
     noisy: Union[np.ndarray, torch.Tensor],
 ) -> float:
-    """
-    Compute SNR (dB) between clean and noisy signals
-    Supports NumPy or PyTorch parameters.
-    """
+    """Compute SNR (dB) between clean and noisy signals."""
     if isinstance(clean, torch.Tensor) and isinstance(noisy, torch.Tensor):
         return _estimate_snr_torch(clean, noisy)
     if isinstance(clean, np.ndarray) and isinstance(noisy, np.ndarray):
@@ -30,9 +27,9 @@ def _estimate_snr_np(clean: np.ndarray, noisy: np.ndarray) -> float:
 
 
 def _estimate_snr_torch(x: torch.Tensor, y: torch.Tensor) -> float:
-    """
-    PyTorch implementation of SNR in dB.
-    Expects real-imag stacked: shape (2, N)
+    """PyTorch implementation of SNR in dB.
+
+    Expects real-imag stacked: shape (2, N).
     """
     sig_power = (x.pow(2).sum(dim=0)).mean().item()
     noise_power = ((y - x).pow(2).sum(dim=0)).mean().item()
@@ -43,10 +40,7 @@ def calculate_ber(
     bits_true: Union[np.ndarray, torch.Tensor],
     bits_est: Union[np.ndarray, torch.Tensor],
 ) -> float:
-    """
-    Compute bit-error rate (fraction of mismatches). Supports both
-    NumPy arrays and 1D torch Tensors.
-    """
+    """Compute bit-error rate (fraction of mismatches)."""
     # If torch, convert to NumPy
     if isinstance(bits_true, torch.Tensor):
         bits_true = bits_true.cpu().numpy()
@@ -54,4 +48,4 @@ def calculate_ber(
         bits_est = bits_est.cpu().numpy()
 
     errors = np.count_nonzero(bits_true != bits_est)
-    return errors / bits_true.size
+    return (errors / bits_true.size)
