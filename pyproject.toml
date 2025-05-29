@@ -1,3 +1,4 @@
+[project]
 name = "sigkit"
 version = "0.0.1"
 description = "Python Signals Toolkit for Pytorch and GNURadio"
