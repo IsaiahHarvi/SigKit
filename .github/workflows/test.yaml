@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          uv pip install -e .
+          uv pip install --system -e .
 
       - name: Run pytest
         run: pytest || (code=$?; [ $code -eq 5 ] && echo "No tests collected; passing" && exit 0 || exit $code)
@@ -51,7 +51,7 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          uv pip install ruff
+          uv pip install --system ruff
 
       - name: Run ruff
         run: ruff check .
