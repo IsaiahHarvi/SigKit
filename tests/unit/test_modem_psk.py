@@ -9,7 +9,7 @@ from sigkit.modem.psk import PSK
 @pytest.mark.parametrize("cf", [0.0, 256.0])
 def test_psk_modem(n_components, cf):
     """
-    For each supported M-PSK (M=2,4,8,16,32,64) and for CF=0 (baseband) and CF=915 Hz,
+    For each supported M-PSK (M=2,4,8,16,32,64) and for CF=0 (baseband) and CF=256 Hz,
     modulate random bits, demodulate them, and assert BER==0.
     """
     sample_rate = 1024
