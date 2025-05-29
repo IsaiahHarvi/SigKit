@@ -48,14 +48,13 @@ class Modem(ABC):
                     f"cf ({cf}) must not exceed Nyquist frequency ({sample_rate/2})"
                 )
 
-        if n_components is not None:
-            if not isinstance(n_components, int) or n_components < 2:
-                raise ValueError(f"n_components must be ≥ 2, got {n_components}")
-            # check power of two
-            if (n_components & (n_components - 1)) != 0:
-                raise ValueError(
-                    f"n_components must be a power of two, got {n_components}"
-                )
+        if not isinstance(n_components, int) or n_components < 2:
+            raise ValueError(f"n_components must be ≥ 2, got {n_components}")
+        # check power of two
+        if (n_components & (n_components - 1)) != 0:
+            raise ValueError(
+                f"n_components must be a power of two, got {n_components}"
+            )
 
         self.sample_rate = sample_rate
         self.symbol_rate = symbol_rate
