@@ -58,7 +58,6 @@ extend-ignore = [
   "D105",  # missing docstring in magic method
   "D106",  # missing docstring in public nested function
   "D107",  # missing docstring in __init__
-  # "D401",  # imperative mood
 ]
 
 # [tool.ruff.lint.per-file-ignores]
