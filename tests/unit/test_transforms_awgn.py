@@ -16,6 +16,6 @@ def test_awgn_torch(snr_db):
     measured = estimate_snr(x, y)
 
     # allow ±1 dB tolerance
-    assert abs(measured - snr_db) < 1.0, (
-        f"measured {measured:.2f}dB != target {snr_db}dB"
-    )
+    assert (
+        abs(measured - snr_db) < 1.0
+    ), f"measured {measured:.2f}dB != target {snr_db}dB"

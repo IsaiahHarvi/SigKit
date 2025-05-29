@@ -48,4 +48,4 @@ def calculate_ber(
         bits_est = bits_est.cpu().numpy()
 
     errors = np.count_nonzero(bits_true != bits_est)
-    return (errors / bits_true.size)
+    return errors / bits_true.size
