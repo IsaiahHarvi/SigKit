@@ -185,6 +185,35 @@ return a new Signal with the impairment applied.</p>
 </dd></dl>
 
 </section>
+<section id="module-sigkit.impairments.frequency_shift">
+<span id="sigkit-impairments-frequency-shift-module"></span><h2>sigkit.impairments.frequency_shift module<a class="headerlink" href="#module-sigkit.impairments.frequency_shift" title="Link to this heading">¶</a></h2>
+<p>Frequency Shift Module utilized for impairments and modulation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sigkit.impairments.frequency_shift.FrequencyShift">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.impairments.frequency_shift.</span></span><span class="sig-name descname"><span class="pre">FrequencyShift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/impairments/frequency_shift.html#FrequencyShift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.impairments.frequency_shift.FrequencyShift" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sigkit.impairments.base.Impairment" title="sigkit.impairments.base.Impairment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Impairment</span></code></a></p>
+<p>Shift a baseband Signal in frequency by a constant offset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq_offset</strong> – Frequency offset in Hz. Positive shifts up, negative shifts down.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imp</span> <span class="o">=</span> <span class="n">FrequencyShift</span><span class="p">(</span><span class="n">freq_offset</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shifted</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.impairments.frequency_shift.FrequencyShift.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="../_modules/sigkit/impairments/frequency_shift.html#FrequencyShift.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.impairments.frequency_shift.FrequencyShift.apply" title="Link to this definition">¶</a></dt>
+<dd><p>ABC Method for applying an impairment to an input Signal.</p>
+<p>Given a Signal object with np.complex64 samples,
+return a new Signal with the impairment applied.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -213,6 +242,13 @@ return a new Signal with the impairment applied.</p>
 <li><a class="reference internal" href="#module-sigkit.impairments.base">sigkit.impairments.base module</a><ul>
 <li><a class="reference internal" href="#sigkit.impairments.base.Impairment"><code class="docutils literal notranslate"><span class="pre">Impairment</span></code></a><ul>
 <li><a class="reference internal" href="#sigkit.impairments.base.Impairment.apply"><code class="docutils literal notranslate"><span class="pre">Impairment.apply()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sigkit.impairments.frequency_shift">sigkit.impairments.frequency_shift module</a><ul>
+<li><a class="reference internal" href="#sigkit.impairments.frequency_shift.FrequencyShift"><code class="docutils literal notranslate"><span class="pre">FrequencyShift</span></code></a><ul>
+<li><a class="reference internal" href="#sigkit.impairments.frequency_shift.FrequencyShift.apply"><code class="docutils literal notranslate"><span class="pre">FrequencyShift.apply()</span></code></a></li>
 </ul>
 </li>
 </ul>

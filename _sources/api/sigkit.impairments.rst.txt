@@ -24,3 +24,11 @@ sigkit.impairments.base module
    :members:
    :show-inheritance:
    :undoc-members:
+
+sigkit.impairments.frequency\_shift module
+------------------------------------------
+
+.. automodule:: sigkit.impairments.frequency_shift
+   :members:
+   :show-inheritance:
+   :undoc-members:
