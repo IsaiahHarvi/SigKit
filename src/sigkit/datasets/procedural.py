@@ -32,13 +32,17 @@ class ProceduralDataset(Dataset):
         mapping_list: List[Dict[Type[Modem], List[int]]],
         sample_rate: int = 1024,
         symbol_rate: int = 32,
-        length: int = (2**31 - 1),
+        val: bool = False,
         seed: Optional[int] = None,
     ):
         if seed is not None:
             random.seed(seed)
             np.random.seed(seed)
             torch.manual_seed(seed)
+
+        self.length = 2**31 - 1
+        if val:
+            self.length = self.length // 2
 
         # instantiate modem instances
         self.modems: List[Tuple[Modem, str]] = []
@@ -64,7 +68,6 @@ class ProceduralDataset(Dataset):
                     self.modems.append((modem, cls_idx))
         if not self.modems:
             raise ValueError("No modem instances created; check mapping_list")
-        self.length = length
 
     def __len__(self) -> int:
         return self.length

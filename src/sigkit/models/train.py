@@ -34,7 +34,7 @@ def train(batch_size: int, lr: float, max_epochs: int):
     """Train the SigKitClassifier on SigKit datasets."""
     mapping_list: List[Dict[Modem, List[int]]] = [{PSK: [2, 4, 8, 16, 32, 64]}]
     train_ds = ProceduralDataset(mapping_list)
-    val_ds = ProceduralDataset(mapping_list, length=((2**31 - 1) // 2), seed=42)
+    val_ds = ProceduralDataset(mapping_list, val=True, seed=42)
 
     dm = SigKitDataModule(
         train_dataset=train_ds, val_dataset=val_ds, batch_size=batch_size
