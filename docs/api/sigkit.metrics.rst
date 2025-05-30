@@ -16,3 +16,11 @@ sigkit.metrics.integrity module
    :members:
    :show-inheritance:
    :undoc-members:
+
+sigkit.metrics.visuals module
+-----------------------------
+
+.. automodule:: sigkit.metrics.visuals
+   :members:
+   :show-inheritance:
+   :undoc-members:

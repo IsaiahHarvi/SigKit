@@ -1,7 +1,12 @@
 numpy
 matplotlib
-ruff
+click
+
 torch
+lightning
 torchvision
+wandb
+
+ruff
 icecream
 pytest
