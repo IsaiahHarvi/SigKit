@@ -1,16 +1,17 @@
 """Training Module for the SigKitClassifier."""
 
+from typing import Dict, List
+
 import click
-from lightning.pytorch.callbacks import ModelCheckpoint
-import torch
 import lightning as pl
-from lightning.pytorch.loggers import WandbLogger
 from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
+from lightning.pytorch.loggers import WandbLogger
+
+from sigkit.datasets.procedural import ProceduralDataset
 from sigkit.models.DataModule import SigKitDataModule
 from sigkit.models.Module import SigKitClassifier
-from sigkit.datasets.procedural import ProceduralDataset
+from sigkit.modem.base import Modem
 from sigkit.modem.psk import PSK
-from icecream import ic
 
 
 @click.command()
@@ -31,7 +32,7 @@ from icecream import ic
 )
 def train(batch_size: int, lr: float, max_epochs: int):
     """Train the SigKitClassifier on SigKit datasets."""
-    mapping_list: List[Dict[Modem, List[Int]]] = [{PSK: [2, 4, 8, 16, 32, 64]}]
+    mapping_list: List[Dict[Modem, List[int]]] = [{PSK: [2, 4, 8, 16, 32, 64]}]
     train_ds = ProceduralDataset(mapping_list)
     val_ds = ProceduralDataset(mapping_list, length=((2**31 - 1) // 2), seed=42)
 

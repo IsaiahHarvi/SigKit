@@ -1,20 +1,22 @@
-import numpy as np
+"""Module for the Procedural SigKit PyTorch Dataset."""
+
 import random
-from typing import List, Dict, Type, Tuple, Optional
+from typing import Dict, List, Optional, Tuple, Type
+
+import numpy as np
 import torch
 from torch.utils.data import Dataset
 
 from sigkit.core.base import Signal
-from sigkit.modem.base import Modem
 from sigkit.models.utils import CLASS_MAP
+from sigkit.modem.base import Modem
 
 
 class ProceduralDataset(Dataset):
-    """
-    Procedural map-style dataset generating an (effectively) infinite stream of symbols.
+    """Procedural map-style dataset generating an "infinite" stream of symbols.
 
     Args:
-        mapping_list: List of dicts mapping a Modem subclass to list of constellation sizes.
+        mapping_list: List of dicts mapping a Modem to list of modulation orders.
             e.g. [{PSK: [2,4,8,16]}, {QAM: [4,16,64]}]
         sample_rate: Sampling rate (Hz) for all modems.
         symbol_rate: Symbol rate (Hz) for all modems.

@@ -1,3 +1,5 @@
+"""Utility file for SigKit Training and Inference processes."""
+
 PSK_CLASS_MAP = {
     0: "2-PSK",
     1: "4-PSK",

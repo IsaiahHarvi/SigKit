@@ -1,16 +1,15 @@
 """Module for creating Torch Datasets to train on."""
 
-import lightning as pl
 import os
 
-from torch.utils.data import DataLoader, Dataset
+import lightning as pl
+from torch.utils.data import DataLoader
+
 from sigkit.datasets.procedural import ProceduralDataset
 
 
 class SigKitDataModule(pl.LightningDataModule):
-    """
-    LightningDataModule for SigKit datasets.
-    """
+    """LightningDataModule for SigKit datasets."""
 
     def __init__(
         self,

@@ -8,9 +8,7 @@ from torchvision.models import efficientnet_b0
 
 
 class SigKitClassifier(pl.LightningModule):
-    """
-    LightningModule with parameterized backbones for signal classification.
-    """
+    """LightningModule with parameterized backbones for signal classification."""
 
     def __init__(self, num_classes: int, lr: float = 1e-3):
         super().__init__()
@@ -30,16 +28,13 @@ class SigKitClassifier(pl.LightningModule):
             padding=old_stem.padding,
             bias=(old_stem.bias is not None),
         )
-        nn.init.kaiming_normal_(new_stem.weight, nonlinearity='relu')
+        nn.init.kaiming_normal_(new_stem.weight, nonlinearity="relu")
         if new_stem.bias is not None:
             nn.init.zeros_(new_stem.bias)
         backbone.features[0][0] = new_stem
 
         self.backbone = backbone
-        self.head = nn.Sequential(
-            nn.Dropout(0.2),
-            nn.Linear(1280, num_classes)
-        )
+        self.head = nn.Sequential(nn.Dropout(0.2), nn.Linear(1280, num_classes))
 
     def forward(self, x):
         if x.ndim == 3:
