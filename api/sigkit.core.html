@@ -159,7 +159,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sigkit.core.base.Signal">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.core.base.</span></span><span class="sig-name descname"><span class="pre">Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples:</span> <span class="pre">~numpy.ndarray</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_freq:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.core.base.</span></span><span class="sig-name descname"><span class="pre">Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples:</span> <span class="pre">~numpy.ndarray</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carrier_frequency:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A container for a complex waveform.</p>
 <dl class="field-list simple">
@@ -167,13 +167,13 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>samples</strong> – ndarray of shape (N) containing complex64 values, defaults to 4096.</p></li>
 <li><p><strong>sample_rate</strong> – in Hz</p></li>
-<li><p><strong>center_freq</strong> – in Hz.</p></li>
+<li><p><strong>carrier_frequency</strong> – in Hz.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sigkit.core.base.Signal.center_freq">
-<span class="sig-name descname"><span class="pre">center_freq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#sigkit.core.base.Signal.center_freq" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="sigkit.core.base.Signal.carrier_frequency">
+<span class="sig-name descname"><span class="pre">carrier_frequency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#sigkit.core.base.Signal.carrier_frequency" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -218,7 +218,7 @@ where row 0 = real (I) and row 1 = imag (Q).</p>
 <li><a class="reference internal" href="#module-sigkit.core.base">sigkit.core.base module</a><ul>
 <li><a class="reference internal" href="#sigkit.core.base.SigKitError"><code class="docutils literal notranslate"><span class="pre">SigKitError</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul>
-<li><a class="reference internal" href="#sigkit.core.base.Signal.center_freq"><code class="docutils literal notranslate"><span class="pre">Signal.center_freq</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.core.base.Signal.carrier_frequency"><code class="docutils literal notranslate"><span class="pre">Signal.carrier_frequency</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.sample_rate"><code class="docutils literal notranslate"><span class="pre">Signal.sample_rate</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.samples"><code class="docutils literal notranslate"><span class="pre">Signal.samples</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.to_tensor"><code class="docutils literal notranslate"><span class="pre">Signal.to_tensor()</span></code></a></li>

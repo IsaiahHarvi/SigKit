@@ -153,14 +153,14 @@
 <span class="sd">    Parameters:</span>
 <span class="sd">        samples: ndarray of shape (N) containing complex64 values, defaults to 4096.</span>
 <span class="sd">        sample_rate: in Hz</span>
-<span class="sd">        center_freq: in Hz.</span>
+<span class="sd">        carrier_frequency: in Hz.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
         <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="n">center_freq</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">carrier_frequency</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 
 <div class="viewcode-block" id="Signal.to_tensor">
 <a class="viewcode-back" href="../../../api/sigkit.core.html#sigkit.core.base.Signal.to_tensor">[docs]</a>

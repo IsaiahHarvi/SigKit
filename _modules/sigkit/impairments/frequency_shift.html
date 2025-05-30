@@ -164,12 +164,12 @@
 
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span>
         <span class="n">shifted</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
-        <span class="n">cf</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">center_freq</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span>
+        <span class="n">cf</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span>
 
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
             <span class="n">samples</span><span class="o">=</span><span class="n">shifted</span><span class="p">,</span>
             <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-            <span class="n">center_freq</span><span class="o">=</span><span class="n">cf</span><span class="p">,</span>
+            <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">cf</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
 

@@ -154,6 +154,7 @@
 <span class="sd">        Returns the Signal with AWGN applied to the target snr_db.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span>
+
         <span class="n">sig_power</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">snr_lin</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
         <span class="n">noise_power</span> <span class="o">=</span> <span class="n">sig_power</span> <span class="o">/</span> <span class="n">snr_lin</span>
@@ -165,7 +166,7 @@
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
             <span class="n">samples</span><span class="o">=</span><span class="n">x</span> <span class="o">+</span> <span class="n">noise</span><span class="p">,</span>
             <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-            <span class="n">center_freq</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">center_freq</span><span class="p">,</span>
+            <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
 

@@ -178,16 +178,14 @@
                 <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cf must be a non‐negative number, got </span><span class="si">{</span><span class="n">cf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">cf</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">sample_rate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;cf (</span><span class="si">{</span><span class="n">cf</span><span class="si">}</span><span class="s2">) must not exceed Nyquist frequency (</span><span class="si">{</span><span class="n">sample_rate</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s2">)&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;cf (</span><span class="si">{</span><span class="n">cf</span><span class="si">}</span><span class="s2">) must not exceed Nyquist frequency (</span><span class="si">{</span><span class="n">sample_rate</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">)&quot;</span>
                 <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_components</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">n_components</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;n_components must be ≥ 2, got </span><span class="si">{</span><span class="n">n_components</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># check power of two</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">n_components</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">n_components</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;n_components must be a power of two, got </span><span class="si">{</span><span class="n">n_components</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;n_components must be a power of two, got </span><span class="si">{</span><span class="n">n_components</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sample_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">symbol_rate</span> <span class="o">=</span> <span class="n">symbol_rate</span>
