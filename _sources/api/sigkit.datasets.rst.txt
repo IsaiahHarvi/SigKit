@@ -9,10 +9,10 @@ sigkit.datasets package
 Submodules
 ----------
 
-sigkit.datasets.base module
----------------------------
+sigkit.datasets.procedural module
+---------------------------------
 
-.. automodule:: sigkit.datasets.base
+.. automodule:: sigkit.datasets.procedural
    :members:
    :show-inheritance:
    :undoc-members:

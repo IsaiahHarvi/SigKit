@@ -163,6 +163,120 @@
 </dd></dl>
 
 </section>
+<section id="module-sigkit.metrics.visuals">
+<span id="sigkit-metrics-visuals-module"></span><h2>sigkit.metrics.visuals module<a class="headerlink" href="#module-sigkit.metrics.visuals" title="Link to this heading">¶</a></h2>
+<p>Contains matplotlib visualizations for signal metrics.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sigkit.metrics.visuals.plot_constellation">
+<span class="sig-prename descclassname"><span class="pre">sigkit.metrics.visuals.</span></span><span class="sig-name descname"><span class="pre">plot_constellation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/metrics/visuals.html#plot_constellation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.metrics.visuals.plot_constellation" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the constellation diagram of a Signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – Signal object containing complex samples.</p></li>
+<li><p><strong>ax</strong> – Optional matplotlib Axes to plot on.</p></li>
+<li><p><strong>s</strong> – Marker size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib Axes containing the plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sigkit.metrics.visuals.plot_frequency">
+<span class="sig-prename descclassname"><span class="pre">sigkit.metrics.visuals.</span></span><span class="sig-name descname"><span class="pre">plot_frequency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/metrics/visuals.html#plot_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.metrics.visuals.plot_frequency" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the magnitude spectrum of a Signal using FFT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – Signal object containing complex samples.</p></li>
+<li><p><strong>ax</strong> – Optional matplotlib Axes to plot on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib Axes containing the plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sigkit.metrics.visuals.plot_phase">
+<span class="sig-prename descclassname"><span class="pre">sigkit.metrics.visuals.</span></span><span class="sig-name descname"><span class="pre">plot_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unwrap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Axes</span></span></span><a class="reference internal" href="../_modules/sigkit/metrics/visuals.html#plot_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.metrics.visuals.plot_phase" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the instantaneous phase of a Signal over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – Signal object containing complex samples.</p></li>
+<li><p><strong>ax</strong> – Optional matplotlib Axes to plot on.</p></li>
+<li><p><strong>unwrap</strong> – If True, unwrap the phase to show continuous variation.</p></li>
+<li><p><strong>n_samples</strong> – Optional number of samples to plot. If None, plots all.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib Axes containing the plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sigkit.metrics.visuals.plot_psd">
+<span class="sig-prename descclassname"><span class="pre">sigkit.metrics.visuals.</span></span><span class="sig-name descname"><span class="pre">plot_psd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfft</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1024</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/metrics/visuals.html#plot_psd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.metrics.visuals.plot_psd" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the Power Spectral Density (PSD) of a Signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – Signal object containing complex samples.</p></li>
+<li><p><strong>ax</strong> – Optional matplotlib Axes to plot on.</p></li>
+<li><p><strong>nfft</strong> – Number of FFT points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib Axes containing the plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sigkit.metrics.visuals.plot_spectrogram">
+<span class="sig-prename descclassname"><span class="pre">sigkit.metrics.visuals.</span></span><span class="sig-name descname"><span class="pre">plot_spectrogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfft</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2048</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noverlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/metrics/visuals.html#plot_spectrogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.metrics.visuals.plot_spectrogram" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the spectrogram of a Signal using Matplotlib’s specgram.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – Signal object containing complex samples.</p></li>
+<li><p><strong>ax</strong> – Optional matplotlib Axes to plot on.</p></li>
+<li><p><strong>nfft</strong> – Number of FFT points.</p></li>
+<li><p><strong>noverlap</strong> – Number of overlapping points.</p></li>
+<li><p><strong>cmap</strong> – Colormap to use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib Axes containing the plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sigkit.metrics.visuals.plot_time">
+<span class="sig-prename descclassname"><span class="pre">sigkit.metrics.visuals.</span></span><span class="sig-name descname"><span class="pre">plot_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Axes</span></span></span><a class="reference internal" href="../_modules/sigkit/metrics/visuals.html#plot_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.metrics.visuals.plot_time" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the real (I) part of a Signal over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – Signal object containing complex samples.</p></li>
+<li><p><strong>n_samples</strong> – Optional number of samples to plot. If None, plots all.</p></li>
+<li><p><strong>ax</strong> – Optional matplotlib Axes to plot on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matplotlib Axes containing the plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -184,6 +298,15 @@
 <li><a class="reference internal" href="#module-sigkit.metrics.integrity">sigkit.metrics.integrity module</a><ul>
 <li><a class="reference internal" href="#sigkit.metrics.integrity.calculate_ber"><code class="docutils literal notranslate"><span class="pre">calculate_ber()</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.metrics.integrity.estimate_snr"><code class="docutils literal notranslate"><span class="pre">estimate_snr()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sigkit.metrics.visuals">sigkit.metrics.visuals module</a><ul>
+<li><a class="reference internal" href="#sigkit.metrics.visuals.plot_constellation"><code class="docutils literal notranslate"><span class="pre">plot_constellation()</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.metrics.visuals.plot_frequency"><code class="docutils literal notranslate"><span class="pre">plot_frequency()</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.metrics.visuals.plot_phase"><code class="docutils literal notranslate"><span class="pre">plot_phase()</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.metrics.visuals.plot_psd"><code class="docutils literal notranslate"><span class="pre">plot_psd()</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.metrics.visuals.plot_spectrogram"><code class="docutils literal notranslate"><span class="pre">plot_spectrogram()</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.metrics.visuals.plot_time"><code class="docutils literal notranslate"><span class="pre">plot_time()</span></code></a></li>
 </ul>
 </li>
 </ul>
