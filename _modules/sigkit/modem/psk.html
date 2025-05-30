@@ -154,17 +154,10 @@
 <span class="sd">            cf: Carrier frequency</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">symbol_rate</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span> <span class="n">cf</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sample_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">symbol_rate</span> <span class="o">=</span> <span class="n">symbol_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">=</span> <span class="n">cf</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n_components</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constellation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
-            <span class="mi">1</span><span class="n">j</span>
-            <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="o">^</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">)])</span> <span class="o">/</span> <span class="n">n_components</span><span class="p">)</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+        <span class="n">bin_indicies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_components</span><span class="p">)</span>
+        <span class="n">indicies</span> <span class="o">=</span> <span class="n">bin_indicies</span> <span class="o">^</span> <span class="p">(</span><span class="n">bin_indicies</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">phases</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">indicies</span> <span class="o">/</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constellation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phases</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PSK.modulate">
 <a class="viewcode-back" href="../../../api/sigkit.modem.html#sigkit.modem.psk.PSK.modulate">[docs]</a>
@@ -181,18 +174,22 @@
             <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Number of bits must be a multiple of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
+        <span class="n">bits</span> <span class="o">=</span> <span class="n">bits</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span><span class="p">)</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">bin_indicies</span> <span class="o">=</span> <span class="n">bits</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+        <span class="n">indicies</span> <span class="o">=</span> <span class="n">bin_indicies</span> <span class="o">^</span> <span class="p">(</span><span class="n">bin_indicies</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">symbols</span> <span class="o">=</span> <span class="n">bits</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span><span class="p">)</span>
-        <span class="n">baseband</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constellation</span><span class="p">[</span>
-            <span class="n">symbols</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="p">]</span>
+        <span class="n">baseband</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constellation</span><span class="p">[</span><span class="n">indicies</span><span class="p">]</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">baseband</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span>
-            <span class="n">samples</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+            <span class="n">samples</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
-            <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">carrier_frequency</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cf</span>
+            <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">),</span>
+            <span class="n">sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+            <span class="n">carrier_frequency</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cf</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -212,20 +209,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">signal</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span><span class="p">:</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span>
-            <span class="n">x</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_symbols</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">bin_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">shift</span> <span class="o">=</span> <span class="n">indices</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">shift</span><span class="p">):</span>
+            <span class="n">bin_indices</span> <span class="o">^=</span> <span class="n">shift</span>
+            <span class="n">shift</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
 
-        <span class="n">symbols</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sps</span><span class="p">)]</span>
-        <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">symbols</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">constellation</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
-        <span class="n">bits</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="p">(</span>
-                <span class="n">dists</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
-                <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-            <span class="p">)</span>
+        <span class="n">bits_matrix</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">bin_indices</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
             <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">bits</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">bits_matrix</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
 </div>
 
 </pre></div>

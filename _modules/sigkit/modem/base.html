@@ -153,6 +153,8 @@
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the common parameters for any Modem.</span>
 
+<span class="sd">        Sets the arguments as members of the class and checks their validity.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            sample_rate: Sampling rate in Hz. Must be a positive int and</span>
 <span class="sd">                satisfy the Nyquist criterion for the symbol rate.</span>
@@ -191,6 +193,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">symbol_rate</span> <span class="o">=</span> <span class="n">symbol_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">=</span> <span class="n">cf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">sample_rate</span> <span class="o">//</span> <span class="n">symbol_rate</span>  <span class="c1"># samples per symbol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n_components</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Modem.modulate">
 <a class="viewcode-back" href="../../../api/sigkit.modem.html#sigkit.modem.base.Modem.modulate">[docs]</a>
@@ -214,6 +217,25 @@
 <span class="sd">        returns bit‐probabilities or hard bits, shape (..., n_bits).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Modem.extract_symbols">
+<a class="viewcode-back" href="../../../api/sigkit.modem.html#sigkit.modem.base.Modem.extract_symbols">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_symbols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">:</span> <span class="n">Signal</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generic symbol extractor.</span>
+
+<span class="sd">        - Removes carrier (if any),</span>
+<span class="sd">        - Downsamples one sample per symbol at midpoint,</span>
+<span class="sd">        - Finds nearest constellation point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">Signal</span><span class="p">)</span> <span class="k">else</span> <span class="n">signal</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
+        <span class="n">sym_samples</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sym_samples</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">constellation</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">return</span> <span class="n">dists</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

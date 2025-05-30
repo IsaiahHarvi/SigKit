@@ -187,6 +187,13 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sigkit.core.base.Signal.to_baseband">
+<span class="sig-name descname"><span class="pre">to_baseband</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal.to_baseband"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal.to_baseband" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the Signal to baseband by removing the carrier frequency.</p>
+<p>If the carrier frequency is 0, returns a copy of the input Signal.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sigkit.core.base.Signal.to_tensor">
 <span class="sig-name descname"><span class="pre">to_tensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal.to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal.to_tensor" title="Link to this definition">¶</a></dt>
 <dd><p>Convert the samples parameter to a PyTorch Tensor.</p>
@@ -221,6 +228,7 @@ where row 0 = real (I) and row 1 = imag (Q).</p>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.carrier_frequency"><code class="docutils literal notranslate"><span class="pre">Signal.carrier_frequency</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.sample_rate"><code class="docutils literal notranslate"><span class="pre">Signal.sample_rate</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.samples"><code class="docutils literal notranslate"><span class="pre">Signal.samples</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.core.base.Signal.to_baseband"><code class="docutils literal notranslate"><span class="pre">Signal.to_baseband()</span></code></a></li>
 <li><a class="reference internal" href="#sigkit.core.base.Signal.to_tensor"><code class="docutils literal notranslate"><span class="pre">Signal.to_tensor()</span></code></a></li>
 </ul>
 </li>
