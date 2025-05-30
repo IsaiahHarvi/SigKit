@@ -20,6 +20,8 @@ class Modem(ABC):
     ):
         """Initialize the common parameters for any Modem.
 
+        Sets the arguments as members of the class and checks their validity.
+
         Args:
             sample_rate: Sampling rate in Hz. Must be a positive int and
                 satisfy the Nyquist criterion for the symbol rate.
@@ -58,6 +60,7 @@ class Modem(ABC):
         self.symbol_rate = symbol_rate
         self.cf = cf
         self.sps: int = sample_rate // symbol_rate  # samples per symbol
+        self.bits_per_symbol = int(np.log2(n_components))
 
     @abstractmethod
     def modulate(self, bits: np.ndarray) -> Signal:
@@ -76,3 +79,19 @@ class Modem(ABC):
         returns bit‐probabilities or hard bits, shape (..., n_bits).
         """
         raise NotImplementedError
+
+    def extract_symbols(self, signal: Signal | np.ndarray) -> np.ndarray:
+        """Generic symbol extractor.
+
+        - Removes carrier (if any),
+        - Downsamples one sample per symbol at midpoint,
+        - Finds nearest constellation point.
+        """
+        x = signal.samples if isinstance(signal, Signal) else signal
+        if self.cf:
+            t = np.arange(x.size) / self.sample_rate
+            x = x * np.exp(-1j * 2 * np.pi * self.cf * t)
+        idx = np.arange(self.sps // 2, x.size, self.sps)
+        sym_samples = x[idx]
+        dists = np.abs(sym_samples[:, None] - self.constellation[None, :])
+        return dists.argmin(axis=1)

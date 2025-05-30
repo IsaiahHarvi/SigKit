@@ -37,3 +37,22 @@ class Signal:
                 np.float32
             )
         )
+
+    def to_baseband(self) -> "Signal":
+        """Convert the Signal to baseband by removing the carrier frequency.
+
+        If the carrier frequency is 0, returns a copy of the input Signal.
+        """
+        if self.carrier_frequency == 0.0:
+            return self
+
+        t = np.arange(self.samples.size) / self.sample_rate
+        baseband_samples = self.samples * np.exp(
+            -1j * 2 * np.pi * self.carrier_frequency * t
+        )
+
+        return Signal(
+            samples=baseband_samples,
+            sample_rate=self.sample_rate,
+            carrier_frequency=0.0,
+        )
