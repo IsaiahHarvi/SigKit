@@ -37,15 +37,15 @@ def _estimate_snr_torch(x: torch.Tensor, y: torch.Tensor) -> float:
 
 
 def calculate_ber(
-    bits_true: Union[np.ndarray, torch.Tensor],
-    bits_est: Union[np.ndarray, torch.Tensor],
+    bits: Union[np.ndarray, torch.Tensor],
+    truth_bits: Union[np.ndarray, torch.Tensor],
 ) -> float:
     """Compute bit-error rate (fraction of mismatches)."""
     # If torch, convert to NumPy
-    if isinstance(bits_true, torch.Tensor):
-        bits_true = bits_true.cpu().numpy()
-    if isinstance(bits_est, torch.Tensor):
-        bits_est = bits_est.cpu().numpy()
+    if isinstance(truth_bits, torch.Tensor):
+        truth_bits = truth_bits.cpu().numpy()
+    if isinstance(bits, torch.Tensor):
+        bits = bits.cpu().numpy()
 
-    errors = np.count_nonzero(bits_true != bits_est)
-    return errors / bits_true.size
+    errors = np.count_nonzero(truth_bits != bits)
+    return errors / truth_bits.size

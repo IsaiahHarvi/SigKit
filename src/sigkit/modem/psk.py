@@ -57,7 +57,7 @@ class PSK(Modem):
             samples *= np.exp(1j * (2 * np.pi) * self.cf * t)
 
         return Signal(
-            samples=samples, sample_rate=self.sample_rate, center_freq=self.cf
+            samples=samples, sample_rate=self.sample_rate, carrier_frequency=self.cf
         )
 
     def demodulate(self, signal: Signal | np.ndarray) -> np.ndarray:

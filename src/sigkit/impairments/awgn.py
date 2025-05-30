@@ -19,6 +19,7 @@ class AWGN(Impairment):
         Returns the Signal with AWGN applied to the target snr_db.
         """
         x: np.ndarray = signal.samples
+
         sig_power = np.mean(np.abs(x) ** 2)
         snr_lin = 10.0 ** (self.snr_db / 10.0)
         noise_power = sig_power / snr_lin
@@ -30,5 +31,5 @@ class AWGN(Impairment):
         return Signal(
             samples=x + noise,
             sample_rate=signal.sample_rate,
-            center_freq=signal.center_freq,
+            carrier_frequency=signal.carrier_frequency,
         )

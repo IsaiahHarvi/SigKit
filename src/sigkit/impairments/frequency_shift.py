@@ -29,10 +29,10 @@ class FrequencyShift(Impairment):
 
         t = np.arange(x.size) / signal.sample_rate
         shifted = x * np.exp(1j * 2 * np.pi * self.freq_offset * t)
-        cf = signal.center_freq + self.freq_offset
+        cf = signal.carrier_frequency + self.freq_offset
 
         return Signal(
             samples=shifted,
             sample_rate=signal.sample_rate,
-            center_freq=cf,
+            carrier_frequency=cf,
         )

@@ -17,14 +17,14 @@ class Signal:
     Parameters:
         samples: ndarray of shape (N) containing complex64 values, defaults to 4096.
         sample_rate: in Hz
-        center_freq: in Hz.
+        carrier_frequency: in Hz.
     """
 
     samples: np.ndarray = field(
         default_factory=lambda: np.zeros(4096, dtype=np.complex64)
     )
     sample_rate: float = 1.0
-    center_freq: float = 0.0
+    carrier_frequency: float = 0.0
 
     def to_tensor(self) -> torch.Tensor:
         """Convert the samples parameter to a PyTorch Tensor.
