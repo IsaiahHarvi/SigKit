@@ -32,3 +32,11 @@ sigkit.impairments.frequency\_shift module
    :members:
    :show-inheritance:
    :undoc-members:
+
+sigkit.impairments.phase\_shift module
+--------------------------------------
+
+.. automodule:: sigkit.impairments.phase_shift
+   :members:
+   :show-inheritance:
+   :undoc-members:
