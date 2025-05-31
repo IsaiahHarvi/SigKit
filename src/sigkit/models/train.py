@@ -70,7 +70,7 @@ def train(batch_size: int, lr: float, max_epochs: int):
             ModelCheckpoint(
                 monitor="val_acc",
                 save_top_k=1,
-                mode="min",
+                mode="max",
                 dirpath="data/checkpoints",
                 filename="best",
             ),
