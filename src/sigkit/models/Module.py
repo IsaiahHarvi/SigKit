@@ -71,7 +71,7 @@ class SigKitClassifier(pl.LightningModule):
         self, num_classes: int, lr: float = 1e-3, leaky_relu_slope: float = 0.01
     ):
         super().__init__()
-        self.save_hyperparameters(ignore=["num_classes"])
+        self.save_hyperparameters()
         self.num_classes = num_classes
         self.lr = lr
 

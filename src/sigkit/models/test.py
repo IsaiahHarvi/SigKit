@@ -11,7 +11,11 @@ from sigkit.transforms.utils import ComplexTo2D, Normalize
 
 def main():
     ckpt_path = "data/checkpoints/best.ckpt"
-    model = SigKitClassifier.load_from_checkpoint(ckpt_path)
+    model = SigKitClassifier.load_from_checkpoint(ckpt_path, num_classes=6)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)
+
     model.eval()
 
     transform = Compose(
@@ -30,11 +34,11 @@ def main():
         for _ in range(32)
     ]
 
-    waveforms = [modem.modulate(bits) for bits in bitstreams]
+    waveforms = [modem.modulate(bits).samples for bits in bitstreams]
 
     tensors = [torch.tensor(w, dtype=torch.complex64) for w in waveforms]
     transformed = [transform(w) for w in tensors]
-    batch = torch.stack(transformed)
+    batch = torch.stack(transformed).to(device)
 
     with torch.no_grad():
         preds = model(batch)
