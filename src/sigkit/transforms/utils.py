@@ -2,6 +2,7 @@
 
 import torch
 import torch.nn as nn
+from torchvision.transforms import Compose
 
 from sigkit.core.base import SigKitError
 
@@ -26,7 +27,7 @@ class ComplexTo2D(nn.Module):
         if x.dtype != torch.complex64:
             raise SigKitError(f"Expected dtype=torch.complex64, got {x.dtype}")
         if x.ndim != 1:
-            raise SigKitError(f"Expected a 1D tensor, got shape {tuple(x.shape)}")
+            raise SigKitError(f"ComplexTo2D expects a 1D tensor, got {x.shape=}")
 
         real = x.real.to(torch.float32)  # shape (N,), dtype float32
         imag = x.imag.to(torch.float32)  # shape (N,), dtype float32
@@ -43,3 +44,12 @@ class Normalize(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         norm = torch.linalg.norm(x, ord=self.norm_order, dim=-1, keepdim=True)
         return (x / norm).to(torch.complex64)
+
+
+"""Transform to prepare a complex tensor for inference."""
+InferenceTransform = Compose(
+    [
+        Normalize(norm=float("inf")),
+        ComplexTo2D(),
+    ]
+)
