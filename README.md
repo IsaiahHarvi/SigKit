@@ -46,7 +46,8 @@ If you use VS Code, we’ve provided a DevContainer configuration:
 1. Install the **Remote – Containers** extension in VS Code.
 2. Clone, open the project, and run `chmod +x .devcontainer/setup.sh`.
 3. Run **Reopen in Container** from the VSCode console.
-3. Inside the container you’ll have all dependencies installed and SigKit ready to run.
+
+Inside the container you’ll have all dependencies installed and SigKit ready to run.
 
 ### 3. Sanity Check
 You can be gauranteeed your installation is sound by running `pytest` without failure from the root of the repository.
