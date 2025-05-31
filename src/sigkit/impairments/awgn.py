@@ -37,4 +37,3 @@ class AWGN(Impairment):
             sample_rate=signal.sample_rate,
             carrier_frequency=signal.carrier_frequency,
         )
-
