@@ -23,16 +23,18 @@ class FrequencyShift(Impairment):
         self.freq_offset = float(freq_offset)
 
     def apply(self, signal: Signal) -> Signal:
-        x = signal.samples
-        if not isinstance(x, np.ndarray) or not np.iscomplexobj(x):
-            raise ValueError("Signal.samples must be a numpy array of complex values")
+        x: np.ndarray = signal.samples
+        if not x.dtype == np.complex64:
+            raise SigKitError(
+                "FrequencyShift impairment expects samples to be of type np.complex64."
+            )
 
         t = np.arange(x.size) / signal.sample_rate
         shifted = x * np.exp(1j * 2 * np.pi * self.freq_offset * t)
         cf = signal.carrier_frequency + self.freq_offset
 
         return Signal(
-            samples=shifted,
+            samples=shifted.astype(np.complex64),
             sample_rate=signal.sample_rate,
             carrier_frequency=cf,
         )
