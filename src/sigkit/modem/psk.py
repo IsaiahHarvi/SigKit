@@ -66,10 +66,9 @@ class PSK(Modem):
         Returns:
             1D array of bits.
         """
-        if isinstance(signal, Signal):
-            x = signal.samples
-        else:
-            x = signal
+        x = signal.samples if isinstance(signal, Signal) else signal
+        if not x.dtype == np.complex64:
+            raise SigKitError("Demodulate expects samples to be of type np.complex64.")
 
         indices = self.extract_symbols(x)
         bin_indices = indices.copy()

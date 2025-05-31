@@ -33,7 +33,8 @@ class AWGN(Impairment):
         )
 
         return Signal(
-            samples=x + noise,
+            samples=(x + noise).astype(np.complex64),
             sample_rate=signal.sample_rate,
             carrier_frequency=signal.carrier_frequency,
         )
+
