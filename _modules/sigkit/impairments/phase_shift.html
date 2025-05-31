@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sigkit.impairments.frequency_shift &#8212; SigKit 0.0.1 documentation</title>
+    <title>sigkit.impairments.phase_shift &#8212; SigKit 0.0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
     <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
@@ -128,8 +128,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for sigkit.impairments.frequency_shift</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Frequency Shift Module utilized for impairments.&quot;&quot;&quot;</span>
+  <h1>Source code for sigkit.impairments.phase_shift</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Phase Shift Module utilized for impairments.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -137,41 +139,55 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.impairments.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Impairment</span>
 
 
-<div class="viewcode-block" id="FrequencyShift">
-<a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.frequency_shift.FrequencyShift">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">FrequencyShift</span><span class="p">(</span><span class="n">Impairment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift a baseband Signal in frequency by a constant offset.</span>
+<div class="viewcode-block" id="PhaseShift">
+<a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.phase_shift.PhaseShift">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PhaseShift</span><span class="p">(</span><span class="n">Impairment</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a constant or random phase offset to a baseband Signal.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        freq_offset: Frequency offset in Hz. Positive shifts up, negative shifts down.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; imp = FrequencyShift(freq_offset=1e3)</span>
-<span class="sd">        &gt;&gt;&gt; shifted = imp.apply(signal)</span>
+<span class="sd">        phase_offset:</span>
+<span class="sd">            - If float: apply a fixed phase (radians).</span>
+<span class="sd">            - If tuple of two numbers (min_phase, max_phase):</span>
+<span class="sd">              pick a random phase (per call) uniformly in [min_phase, max_phase].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;freq_offset must be a number, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phase_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phase_range</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+            <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phase_offset</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phase_range</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
+                <span class="s2">&quot;phase_offset must be a number or a 2‐tuple/list of numbers, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">phase_offset</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
-<div class="viewcode-block" id="FrequencyShift.apply">
-<a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.frequency_shift.FrequencyShift.apply">[docs]</a>
+<div class="viewcode-block" id="PhaseShift.apply">
+<a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.phase_shift.PhaseShift.apply">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">:</span> <span class="n">Signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Signal</span><span class="p">:</span>
         <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span>
         <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
-                <span class="s2">&quot;FrequencyShift impairment expects samples to be of type np.complex64.&quot;</span>
+                <span class="s2">&quot;PhaseShift impairment expects samples to be np.complex64.&quot;</span>
             <span class="p">)</span>
 
-        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span>
-        <span class="n">shifted</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
-        <span class="n">cf</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span>
+        <span class="n">min_ph</span><span class="p">,</span> <span class="n">max_ph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">phase_range</span>
+        <span class="k">if</span> <span class="n">min_ph</span> <span class="o">==</span> <span class="n">max_ph</span><span class="p">:</span>  <span class="c1"># fixed offset</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="n">min_ph</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">min_ph</span><span class="p">,</span> <span class="n">max_ph</span><span class="p">))</span>
+
+        <span class="n">phase_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+        <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">phase_factor</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
-            <span class="n">samples</span><span class="o">=</span><span class="n">shifted</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">),</span>
+            <span class="n">samples</span><span class="o">=</span><span class="n">shifted</span><span class="p">,</span>
             <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-            <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">cf</span><span class="p">,</span>
+            <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
 

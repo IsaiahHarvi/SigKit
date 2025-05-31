@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sigkit.impairments.frequency_shift &#8212; SigKit 0.0.1 documentation</title>
+    <title>sigkit.transforms.phase_shift &#8212; SigKit 0.0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
     <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
@@ -128,52 +128,78 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for sigkit.impairments.frequency_shift</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Frequency Shift Module utilized for impairments.&quot;&quot;&quot;</span>
+  <h1>Source code for sigkit.transforms.phase_shift</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module for PhaseShift Torch Transform.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SigKitError</span><span class="p">,</span> <span class="n">Signal</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.impairments.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Impairment</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SigKitError</span>
 
 
-<div class="viewcode-block" id="FrequencyShift">
-<a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.frequency_shift.FrequencyShift">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">FrequencyShift</span><span class="p">(</span><span class="n">Impairment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift a baseband Signal in frequency by a constant offset.</span>
+<div class="viewcode-block" id="ApplyPhaseShift">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.phase_shift.ApplyPhaseShift">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApplyPhaseShift</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a constant or random phase offset to a (2, N) I/Q torch.Tensor.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        freq_offset: Frequency offset in Hz. Positive shifts up, negative shifts down.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; imp = FrequencyShift(freq_offset=1e3)</span>
-<span class="sd">        &gt;&gt;&gt; shifted = imp.apply(signal)</span>
+<span class="sd">        phase_offset:</span>
+<span class="sd">            - If float or int: apply that fixed phase (radians).</span>
+<span class="sd">            - If tuple of two numbers (min_phase, max_phase):</span>
+<span class="sd">              pick a random phase uniformly in each forward() call.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;freq_offset must be a number, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">)</span>
-
-<div class="viewcode-block" id="FrequencyShift.apply">
-<a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.frequency_shift.FrequencyShift.apply">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">:</span> <span class="n">Signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Signal</span><span class="p">:</span>
-        <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span>
-        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phase_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_phi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_phi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+            <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phase_offset</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_phi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_phi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phase_offset</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
-                <span class="s2">&quot;FrequencyShift impairment expects samples to be of type np.complex64.&quot;</span>
+                <span class="s2">&quot;ApplyPhaseShift: phase_offset must be a number or 2‐tuple range,&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">phase_offset</span><span class="si">!r}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
-        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span>
-        <span class="n">shifted</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
-        <span class="n">cf</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span>
+<div class="viewcode-block" id="ApplyPhaseShift.forward">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.phase_shift.ApplyPhaseShift.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies a PhaseShift to the Tensor.</span>
 
-        <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
-            <span class="n">samples</span><span class="o">=</span><span class="n">shifted</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">),</span>
-            <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-            <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">cf</span><span class="p">,</span>
-        <span class="p">)</span></div>
+<span class="sd">        Args:</span>
+<span class="sd">            x: torch.Tensor of shape (2, N), dtype=torch.float32, where</span>
+<span class="sd">               row 0 = I, row 1 = Q.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new torch.Tensor of shape (2, N), dtype=torch.float32, with a phase</span>
+<span class="sd">            rotation by phi, where phi is either the fixed value or</span>
+<span class="sd">            a random sample in [min_phi, max_phi].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PhaseShiftTorch expects shape (2, N), got </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_phi</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_phi</span><span class="p">:</span>  <span class="c1"># fixed</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_phi</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_phi</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_phi</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span>
+
+        <span class="n">c</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+
+        <span class="c1"># (2, N) row 0 = I, row 1 = Q</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 </div>
+
 
 </pre></div>
 

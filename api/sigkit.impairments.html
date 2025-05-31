@@ -187,7 +187,7 @@ return a new Signal with the impairment applied.</p>
 </section>
 <section id="module-sigkit.impairments.frequency_shift">
 <span id="sigkit-impairments-frequency-shift-module"></span><h2>sigkit.impairments.frequency_shift module<a class="headerlink" href="#module-sigkit.impairments.frequency_shift" title="Link to this heading">¶</a></h2>
-<p>Frequency Shift Module utilized for impairments and modulation.</p>
+<p>Frequency Shift Module utilized for impairments.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sigkit.impairments.frequency_shift.FrequencyShift">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.impairments.frequency_shift.</span></span><span class="sig-name descname"><span class="pre">FrequencyShift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/impairments/frequency_shift.html#FrequencyShift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.impairments.frequency_shift.FrequencyShift" title="Link to this definition">¶</a></dt>
@@ -206,6 +206,35 @@ return a new Signal with the impairment applied.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sigkit.impairments.frequency_shift.FrequencyShift.apply">
 <span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="../_modules/sigkit/impairments/frequency_shift.html#FrequencyShift.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.impairments.frequency_shift.FrequencyShift.apply" title="Link to this definition">¶</a></dt>
+<dd><p>ABC Method for applying an impairment to an input Signal.</p>
+<p>Given a Signal object with np.complex64 samples,
+return a new Signal with the impairment applied.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-sigkit.impairments.phase_shift">
+<span id="sigkit-impairments-phase-shift-module"></span><h2>sigkit.impairments.phase_shift module<a class="headerlink" href="#module-sigkit.impairments.phase_shift" title="Link to this heading">¶</a></h2>
+<p>Phase Shift Module utilized for impairments.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sigkit.impairments.phase_shift.PhaseShift">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.impairments.phase_shift.</span></span><span class="sig-name descname"><span class="pre">PhaseShift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(-3.141592653589793,</span> <span class="pre">3.141592653589793)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/impairments/phase_shift.html#PhaseShift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.impairments.phase_shift.PhaseShift" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sigkit.impairments.base.Impairment" title="sigkit.impairments.base.Impairment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Impairment</span></code></a></p>
+<p>Apply a constant or random phase offset to a baseband Signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phase_offset</strong> – <ul class="simple">
+<li><p>If float: apply a fixed phase (radians).</p></li>
+<li><p>If tuple of two numbers (min_phase, max_phase):
+pick a random phase (per call) uniformly in [min_phase, max_phase].</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.impairments.phase_shift.PhaseShift.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="../_modules/sigkit/impairments/phase_shift.html#PhaseShift.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.impairments.phase_shift.PhaseShift.apply" title="Link to this definition">¶</a></dt>
 <dd><p>ABC Method for applying an impairment to an input Signal.</p>
 <p>Given a Signal object with np.complex64 samples,
 return a new Signal with the impairment applied.</p>
@@ -249,6 +278,13 @@ return a new Signal with the impairment applied.</p>
 <li><a class="reference internal" href="#module-sigkit.impairments.frequency_shift">sigkit.impairments.frequency_shift module</a><ul>
 <li><a class="reference internal" href="#sigkit.impairments.frequency_shift.FrequencyShift"><code class="docutils literal notranslate"><span class="pre">FrequencyShift</span></code></a><ul>
 <li><a class="reference internal" href="#sigkit.impairments.frequency_shift.FrequencyShift.apply"><code class="docutils literal notranslate"><span class="pre">FrequencyShift.apply()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sigkit.impairments.phase_shift">sigkit.impairments.phase_shift module</a><ul>
+<li><a class="reference internal" href="#sigkit.impairments.phase_shift.PhaseShift"><code class="docutils literal notranslate"><span class="pre">PhaseShift</span></code></a><ul>
+<li><a class="reference internal" href="#sigkit.impairments.phase_shift.PhaseShift.apply"><code class="docutils literal notranslate"><span class="pre">PhaseShift.apply()</span></code></a></li>
 </ul>
 </li>
 </ul>
