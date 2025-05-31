@@ -5,6 +5,7 @@ from typing import Dict, List
 import click
 import lightning as pl
 import numpy as np
+import torch
 from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
 from lightning.pytorch.loggers import WandbLogger
 from torchvision.transforms import Compose, RandomApply
@@ -16,8 +17,9 @@ from sigkit.modem.base import Modem
 from sigkit.modem.psk import PSK
 from sigkit.transforms.awgn import ApplyAWGN
 from sigkit.transforms.phase_shift import ApplyPhaseShift
-from sigkit.transforms.utils import ComplexTo2D
+from sigkit.transforms.utils import ComplexTo2D, Normalize
 
+torch.set_float32_matmul_precision("medium")
 
 @click.command()
 @click.option(
@@ -25,7 +27,6 @@ from sigkit.transforms.utils import ComplexTo2D
     default=32,
     type=int,
     show_default=True,
-    help="Batch size for training",
 )
 @click.option("--lr", default=1e-3, type=float, show_default=True, help="Learning rate")
 @click.option(
@@ -45,6 +46,7 @@ def train(batch_size: int, lr: float, max_epochs: int):
                     ApplyAWGN((-2, 30)),
                 ]
             ),
+            Normalize(norm=np.inf),
             ComplexTo2D(),
         ]
     )
@@ -66,7 +68,11 @@ def train(batch_size: int, lr: float, max_epochs: int):
         logger=logger,
         callbacks=[
             ModelCheckpoint(
-                monitor="val_acc", save_top_k=1, mode="min", filename="best.ckpt"
+                monitor="val_acc",
+                save_top_k=1,
+                mode="min",
+                dirpath="data/checkpoints",
+                filename="best",
             ),
             EarlyStopping(monitor="val_loss", patience=10, mode="min", verbose=True),
         ],

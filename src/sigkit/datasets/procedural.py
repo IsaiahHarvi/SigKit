@@ -42,7 +42,7 @@ class ProceduralDataset(Dataset):
             np.random.seed(seed)
             torch.manual_seed(seed)
 
-        self.length = 2**31 - 1
+        self.length = 5e5
         if val:
             self.length = self.length // 2
 
@@ -72,7 +72,7 @@ class ProceduralDataset(Dataset):
             raise ValueError("No modem instances created; check mapping_list")
 
     def __len__(self) -> int:
-        return self.length
+        return int(self.length)
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, int]:
         modem, cls_idx = random.choice(self.modems)

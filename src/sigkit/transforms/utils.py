@@ -1,5 +1,6 @@
 """Utility module for SigKit transforms."""
 
+import numpy as np
 import torch
 import torch.nn as nn
 
@@ -31,3 +32,15 @@ class ComplexTo2D(nn.Module):
         real = x.real.to(torch.float32)  # shape (N,), dtype float32
         imag = x.imag.to(torch.float32)  # shape (N,), dtype float32
         return torch.stack([real, imag], dim=0)  # shape (2, N), dtype float32
+
+
+class Normalize(nn.Module):
+    """Normalize the input data."""
+
+    def __init__(self, norm=float("inf")):
+        super().__init__()
+        self.norm_order = norm
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        norm = torch.linalg.norm(x, ord=self.norm_order, dim=-1, keepdim=True)
+        return (x / norm).to(torch.complex64)
