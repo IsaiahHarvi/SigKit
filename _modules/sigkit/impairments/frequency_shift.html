@@ -158,16 +158,18 @@
 <div class="viewcode-block" id="FrequencyShift.apply">
 <a class="viewcode-back" href="../../../api/sigkit.impairments.html#sigkit.impairments.frequency_shift.FrequencyShift.apply">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">:</span> <span class="n">Signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Signal</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">iscomplexobj</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Signal.samples must be a numpy array of complex values&quot;</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">samples</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
+                <span class="s2">&quot;FrequencyShift impairment expects samples to be of type np.complex64.&quot;</span>
+            <span class="p">)</span>
 
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span>
         <span class="n">shifted</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
         <span class="n">cf</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq_offset</span>
 
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
-            <span class="n">samples</span><span class="o">=</span><span class="n">shifted</span><span class="p">,</span>
+            <span class="n">samples</span><span class="o">=</span><span class="n">shifted</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">),</span>
             <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
             <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">cf</span><span class="p">,</span>
         <span class="p">)</span></div>

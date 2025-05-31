@@ -190,15 +190,16 @@
 <dt class="sig sig-object py" id="sigkit.core.base.Signal.to_baseband">
 <span class="sig-name descname"><span class="pre">to_baseband</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal.to_baseband"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal.to_baseband" title="Link to this definition">¶</a></dt>
 <dd><p>Convert the Signal to baseband by removing the carrier frequency.</p>
-<p>If the carrier frequency is 0, returns a copy of the input Signal.</p>
+<p>If the carrier frequency is 0, the method returns.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sigkit.core.base.Signal.to_tensor">
 <span class="sig-name descname"><span class="pre">to_tensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal.to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal.to_tensor" title="Link to this definition">¶</a></dt>
 <dd><p>Convert the samples parameter to a PyTorch Tensor.</p>
-<p>Convert into a float32 tensor of shape (2, 4096),
-where row 0 = real (I) and row 1 = imag (Q).</p>
+<p>Convert into a float32 tensor of shape (2, N),
+where row 0 = real (I) and row 1 = imag (Q).
+Note that for our training pipeline, N should be 4096.</p>
 </dd></dl>
 
 </dd></dl>

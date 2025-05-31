@@ -168,11 +168,12 @@
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
-            <span class="n">samples</span><span class="o">=</span><span class="n">x</span> <span class="o">+</span> <span class="n">noise</span><span class="p">,</span>
+            <span class="n">samples</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">noise</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">),</span>
             <span class="n">sample_rate</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
             <span class="n">carrier_frequency</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">carrier_frequency</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
+
 
 </pre></div>
 

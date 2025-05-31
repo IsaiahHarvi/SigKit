@@ -162,13 +162,18 @@
     <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">carrier_frequency</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="s2">&quot;Signal samples must be np.ndarray[complex64]&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Signal.to_tensor">
 <a class="viewcode-back" href="../../../api/sigkit.core.html#sigkit.core.base.Signal.to_tensor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the samples parameter to a PyTorch Tensor.</span>
 
-<span class="sd">        Convert into a float32 tensor of shape (2, 4096),</span>
+<span class="sd">        Convert into a float32 tensor of shape (2, N),</span>
 <span class="sd">        where row 0 = real (I) and row 1 = imag (Q).</span>
+<span class="sd">        Note that for our training pipeline, N should be 4096.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
@@ -182,15 +187,15 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">to_baseband</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Signal&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the Signal to baseband by removing the carrier frequency.</span>
 
-<span class="sd">        If the carrier frequency is 0, returns a copy of the input Signal.</span>
+<span class="sd">        If the carrier frequency is 0, the method returns.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span>
 
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span>
-        <span class="n">baseband_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
-            <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">*</span> <span class="n">t</span>
-        <span class="p">)</span>
+        <span class="n">baseband_samples</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">carrier_frequency</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Signal</span><span class="p">(</span>
             <span class="n">samples</span><span class="o">=</span><span class="n">baseband_samples</span><span class="p">,</span>
