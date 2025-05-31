@@ -12,7 +12,7 @@ class SigKitError(Exception):
 
 @dataclass
 class Signal:
-    """A class for a complex waveform.
+    """A container for a complex waveform.
 
     Parameters:
         samples: ndarray of shape (N) containing complex64 values, defaults to 4096.
