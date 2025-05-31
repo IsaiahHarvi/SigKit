@@ -1,6 +1,7 @@
-"""Phase Shift Keying Module."""
+"""Frequency Shift Keying Module."""
 
 import math
+
 import numpy as np
 
 from sigkit.core.base import SigKitError, Signal
@@ -25,13 +26,13 @@ class FSK(Modem):
 
         if n_components > self.sps:
             raise SigKitError(
-                f"samples_per_symbol ({self.sps}) must be ≥ n_components ({n_components})"
+                f"samples_per_symbol ({self.sps}) must be ≥ {n_components=})"
             )
 
         tones = [
             (cf + (i * symbol_rate)) for i in range(n_components)
         ]
-        self.tones = np.array(tones, dtype=float)
+        self.tones = np.array(tones, dtype=np.float32)
 
     def modulate(self, bits: np.ndarray) -> Signal:
         """Modulate bits with FSK.
