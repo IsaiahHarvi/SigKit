@@ -6,6 +6,7 @@ from typing import Dict, List, Optional, Tuple, Type
 import numpy as np
 import torch
 from torch.utils.data import Dataset
+from torchvision.transforms import Compose
 
 from sigkit.core.base import Signal
 from sigkit.models.utils import CLASS_MAP
@@ -32,6 +33,7 @@ class ProceduralDataset(Dataset):
         mapping_list: List[Dict[Type[Modem], List[int]]],
         sample_rate: int = 1024,
         symbol_rate: int = 32,
+        transform: Optional[Compose] = None,
         val: bool = False,
         seed: Optional[int] = None,
     ):
@@ -44,7 +46,7 @@ class ProceduralDataset(Dataset):
         if val:
             self.length = self.length // 2
 
-        # instantiate modem instances
+        self.transform = transform
         self.modems: List[Tuple[Modem, str]] = []
         for mapping in mapping_list:
             if not isinstance(mapping, dict):
@@ -88,4 +90,9 @@ class ProceduralDataset(Dataset):
             raise AssertionError(
                 f"Generated waveform length {signal.samples.size} != 4096"
             )
-        return signal.to_tensor(), CLASS_MAP[cls_idx]
+        signal: torch.Tensor = signal.to_tensor()
+
+        if self.transform is not None:
+            signal = self.transform(signal)
+
+        return signal, CLASS_MAP[cls_idx]

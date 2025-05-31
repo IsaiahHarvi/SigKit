@@ -7,11 +7,7 @@ import torch.nn.functional as F
 
 
 class ResidualUnit1d(nn.Module):
-    """
-    A single ResNet‐style 1D residual unit:
-      - Two Conv1d layers (kernel_size=3, padding=1), each followed by BatchNorm1d + LeakyReLU.
-      - Optional 1×1 Conv1d on the skip path when stride != 1 or in_channels != out_channels.
-    """
+    """A single ResNet‐style 1D residual unit."""
 
     def __init__(
         self,
@@ -65,14 +61,15 @@ class ResidualUnit1d(nn.Module):
         out = self.conv2(out)
         out = self.bn2(out)
         out += identity
-        out = self.act2(out)
-        return out
+        return self.act2(out)
 
 
 class SigKitClassifier(pl.LightningModule):
     """ResNet‐style Signal classifier for complex I/Q signals."""
 
-    def __init__(self, num_classes: int, lr: float = 1e-3, leaky_relu_slope: float = 0.01):
+    def __init__(
+        self, num_classes: int, lr: float = 1e-3, leaky_relu_slope: float = 0.01
+    ):
         super().__init__()
         self.save_hyperparameters(ignore=["num_classes"])
         self.num_classes = num_classes
@@ -103,10 +100,14 @@ class SigKitClassifier(pl.LightningModule):
         #   - First unit downsamples (32->64, stride=2): time 512->256
         #   - Second unit (64->64, stride=1)
         self.block2 = nn.Sequential(
-            ResidualUnit1d(32, 64, stride=2, leaky_relu_slope=leaky_relu_slope),  # (512->256, 32->64)
+            ResidualUnit1d(
+                32, 64, stride=2, leaky_relu_slope=leaky_relu_slope
+            ),  # (512->256, 32->64)
             ResidualUnit1d(64, 64, stride=1, leaky_relu_slope=leaky_relu_slope),
         )
-        self.global_pool = nn.AdaptiveAvgPool1d(output_size=1)  # (256-channels length->1)
+        self.global_pool = nn.AdaptiveAvgPool1d(
+            output_size=1
+        )  # (256-channels length->1)
         self.flatten = nn.Flatten()  # (B, 64, 1) -> (B, 64)
         self.head = nn.Sequential(
             nn.Linear(64, 512, bias=True),
@@ -115,13 +116,12 @@ class SigKitClassifier(pl.LightningModule):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        out = self.stem(x)          # -> (B,32,512)
-        out = self.block1(out)      # -> (B,32,512)
-        out = self.block2(out)      # -> (B,64,256)
-        out = self.global_pool(out) # -> (B,64,1)
-        out = self.flatten(out)     # -> (B,64)
-        logits = self.head(out)     # -> (B,num_classes)
-        return logits
+        out = self.stem(x)  # -> (B,32,512)
+        out = self.block1(out)  # -> (B,32,512)
+        out = self.block2(out)  # -> (B,64,256)
+        out = self.global_pool(out)  # -> (B,64,1)
+        out = self.flatten(out)  # -> (B,64)
+        return self.head(out)  # -> (B,num_classes)
 
     def training_step(self, batch, batch_idx):
         signals, labels = batch
@@ -144,4 +144,3 @@ class SigKitClassifier(pl.LightningModule):
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
-

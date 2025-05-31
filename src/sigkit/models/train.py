@@ -4,14 +4,19 @@ from typing import Dict, List
 
 import click
 import lightning as pl
+import numpy as np
 from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
 from lightning.pytorch.loggers import WandbLogger
+from torchvision.transforms import Compose, RandomApply
 
 from sigkit.datasets.procedural import ProceduralDataset
 from sigkit.models.DataModule import SigKitDataModule
 from sigkit.models.Module import SigKitClassifier
 from sigkit.modem.base import Modem
 from sigkit.modem.psk import PSK
+from sigkit.transforms.awgn import ApplyAWGN
+from sigkit.transforms.phase_shift import ApplyPhaseShift
+from sigkit.transforms.utils import ComplexTo2D
 
 
 @click.command()
@@ -32,9 +37,22 @@ from sigkit.modem.psk import PSK
 )
 def train(batch_size: int, lr: float, max_epochs: int):
     """Train the SigKitClassifier on SigKit datasets."""
+    train_transform = Compose(
+        [
+            RandomApply(
+                [
+                    ApplyPhaseShift((-np.pi, np.pi)),
+                    ApplyAWGN((-2, 30)),
+                ]
+            ),
+            ComplexTo2D(),
+        ]
+    )
+    val_transform = train_transform
+
     mapping_list: List[Dict[Modem, List[int]]] = [{PSK: [2, 4, 8, 16, 32, 64]}]
-    train_ds = ProceduralDataset(mapping_list)
-    val_ds = ProceduralDataset(mapping_list, val=True, seed=42)
+    train_ds = ProceduralDataset(mapping_list, transform=train_transform)
+    val_ds = ProceduralDataset(mapping_list, transform=val_transform, val=True, seed=42)
 
     dm = SigKitDataModule(
         train_dataset=train_ds, val_dataset=val_ds, batch_size=batch_size
