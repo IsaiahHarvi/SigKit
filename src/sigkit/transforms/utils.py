@@ -15,9 +15,9 @@ class ComplexTo2D(nn.Module):
       - Row 1 = imaginary part
 
     Example:
-        x = torch.randn(4096) + 1j * torch.randn(4096) # dtype=torch.float32
-        x = x.to(torch.complex64)       # shape: (4096,), dtype: complex64
-        iq = ComplexTo2D(x)             # shape: (2, 4096), dtype: float32
+        x = torch.randn(4096) + 1j * torch.randn(4096)
+        x = x.to(torch.complex64)
+        iq = ComplexTo2D(x)
     """
 
     def forward(self, x: torch.Tensor):

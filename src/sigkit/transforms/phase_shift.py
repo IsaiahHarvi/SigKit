@@ -1,4 +1,4 @@
-"""Module for PhaseShift Torch Transform on complex64 tensors."""
+"""Module for PhaseShift Torch Transform."""
 
 import math
 from typing import Tuple, Union
