@@ -19,8 +19,8 @@ class ApplyAWGN(nn.Module):
         Expects a (2, N) shaped tensor of I & Q channels
         Returns the signal with AWGN applied to the target snr_db.
         """
-        if x.ndim != 2 or x.dtype != torch.float32:
-            raise SigKitError("Expected input of shape (2, N) and type float32")
+        if (x.ndim != 2) or (x.shape[0] != 2) or (x.dtype != torch.float32):
+            raise SigKitError(f"ApplyAWGN expects shape (2, N), got {tuple(x.shape)}")
 
         sig_power = (x.pow(2).sum(dim=0)).mean()
         snr_lin = 10.0 ** (self.snr_db / 10.0)
