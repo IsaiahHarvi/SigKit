@@ -1,4 +1,4 @@
-"""Frequency Shift Module utilized for impairments and modulation."""
+"""Frequency Shift Module utilized for impairments."""
 
 import numpy as np
 
@@ -24,7 +24,7 @@ class FrequencyShift(Impairment):
 
     def apply(self, signal: Signal) -> Signal:
         x: np.ndarray = signal.samples
-        if not x.dtype == np.complex64:
+        if x.dtype != np.complex64:
             raise SigKitError(
                 "FrequencyShift impairment expects samples to be of type np.complex64."
             )

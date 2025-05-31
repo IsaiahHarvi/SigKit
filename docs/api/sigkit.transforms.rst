@@ -16,3 +16,11 @@ sigkit.transforms.awgn module
    :members:
    :show-inheritance:
    :undoc-members:
+
+sigkit.transforms.phase\_shift module
+-------------------------------------
+
+.. automodule:: sigkit.transforms.phase_shift
+   :members:
+   :show-inheritance:
+   :undoc-members:
