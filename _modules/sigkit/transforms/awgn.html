@@ -140,28 +140,61 @@
 <div class="viewcode-block" id="ApplyAWGN">
 <a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.awgn.ApplyAWGN">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ApplyAWGN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Additive White Gaussian Noise Torch Transform.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Additive White Gaussian Noise Torch Transform with optional SNR range.</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="sd">    Args:</span>
+<span class="sd">        snr_db:</span>
+<span class="sd">            - If float or int: use that fixed SNR (in dB) on every forward().</span>
+<span class="sd">            - If tuple/list of two floats: (min_snr_db, max_snr_db), sample</span>
+<span class="sd">              uniformly from [min_snr_db, max_snr_db] each all.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">=</span> <span class="n">snr_db</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">snr_db</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_snr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">snr_db</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_snr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">snr_db</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">snr_db</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">snr_db</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+            <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">snr_db</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_snr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">snr_db</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_snr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">snr_db</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span>
+                <span class="s2">&quot;ApplyAWGN: snr_db must be a number or a tuple of two numbers, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">snr_db</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
 <div class="viewcode-block" id="ApplyAWGN.forward">
 <a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.awgn.ApplyAWGN.forward">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies AWGN to the Tensor to reach the target SNR.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies AWGN to the input to reach the target SNR.</span>
 
-<span class="sd">        Expects a (2, N) shaped tensor of I &amp; Q channels</span>
-<span class="sd">        Returns the signal with AWGN applied to the target snr_db.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            x: torch.Tensor of shape [N], dtype=torch.complex64.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            torch.Tensor of shape [N], dtype=torch.complex64 with AWGN.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ApplyAWGN expects shape (2, N), got </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">complex64</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="s2">&quot;Expected input of shape [N] and dtype=torch.complex64&quot;</span><span class="p">)</span>
 
-        <span class="n">sig_power</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="n">snr_lin</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_snr</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_snr</span><span class="p">:</span>
+            <span class="n">snr_db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_snr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">snr_db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_snr</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_snr</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_snr</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span>
+
+        <span class="n">sig_power</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">snr_lin</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
         <span class="n">noise_power</span> <span class="o">=</span> <span class="n">sig_power</span> <span class="o">/</span> <span class="n">snr_lin</span>
+        <span class="n">std_dev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">noise_power</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
 
-        <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">noise_power</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">real_noise</span> <span class="o">=</span> <span class="n">std_dev</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+        <span class="n">imag_noise</span> <span class="o">=</span> <span class="n">std_dev</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="p">(</span><span class="n">real_noise</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">imag_noise</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">noise</span></div>
 </div>

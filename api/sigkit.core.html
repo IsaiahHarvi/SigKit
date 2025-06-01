@@ -197,8 +197,7 @@
 <dt class="sig sig-object py" id="sigkit.core.base.Signal.to_tensor">
 <span class="sig-name descname"><span class="pre">to_tensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../_modules/sigkit/core/base.html#Signal.to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.core.base.Signal.to_tensor" title="Link to this definition">¶</a></dt>
 <dd><p>Convert the samples parameter to a PyTorch Tensor.</p>
-<p>Convert into a float32 tensor of shape (2, N),
-where row 0 = real (I) and row 1 = imag (Q).
+<p>Convert into a complex64 tensor of shape (N,),
 Note that for our training pipeline, N should be 4096.</p>
 </dd></dl>
 
