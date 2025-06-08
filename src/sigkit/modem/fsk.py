@@ -1,7 +1,5 @@
 """Frequency Shift Keying Module."""
 
-import math
-
 import numpy as np
 
 from sigkit.core.base import SigKitError, Signal
@@ -49,25 +47,31 @@ class FSK(Modem):
             )
 
         bits = bits.reshape(-1, self.bits_per_symbol)
+        num_symbols = bits.shape[0]
+        num_samples = num_symbols * self.sps
 
-        symbol_tones = []
-        for symbol_bits in bits:
+        symbol_tones = np.zeros(num_symbols, dtype=float)
+        for i in range(num_symbols):
             symbol_index = 0
-            for bit in symbol_bits:
+            for bit in bits[i]:
                 symbol_index = (symbol_index << 1) | int(bit)
 
             symbol_tone = self.tones[symbol_index]
-            symbol_tones.append(symbol_tone)
+            symbol_tones[i] = symbol_tone
 
-        samples = []
-        for symbol_tone in symbol_tones:
+        samples = np.zeros(num_samples, dtype=np.complex64)
+        for i in range(num_symbols):
+            symbol_tone = symbol_tones[i]
             base = (2. * np.pi * symbol_tone) / self.sample_rate
-            for n in range(self.sps):
-                phase = base * n
-                i = math.cos(phase)
-                q = math.sin(phase)
-                sample = i + (1j * q)
-                samples.append(sample)
+
+            phase = base * np.arange(self.sps)
+            i_samples = np.cos(phase)
+            q_samples = np.sin(phase)
+            chunk = i_samples + (1j * q_samples)
+
+            start = self.sps * i
+            end = self.sps * (i + 1)
+            samples[start:end] = chunk.astype(np.complex64)
 
         return Signal(
             samples=np.array(samples, dtype=np.complex64),
@@ -95,21 +99,18 @@ class FSK(Modem):
             bins[i] = bin_index
 
         num_symbols = samples.size // self.sps
-        symbol_indices = []
-        for i in range(num_symbols):
-            start = i * self.sps
-            end = start + self.sps
-            chunk = samples[start:end]
+        symbols = samples.reshape(num_symbols, self.sps)
+        spectrum = np.fft.fft(symbols, axis=1)
+        magnitudes = np.abs(spectrum[:, bins])
+        symbol_indices = np.argmax(magnitudes, axis=1)
 
-            spectrum = np.fft.fft(chunk)
-            magnitudes = np.abs(spectrum[bins])
-            best_tone_index = int(np.argmax(magnitudes))
-            symbol_indices.append(best_tone_index)
+        num_bits = num_symbols * self.bits_per_symbol
+        output = np.zeros(num_bits, dtype=np.uint8)
+        for symbol_index in range(num_symbols):
+            symbol = symbol_indices[symbol_index]
+            for bit_pos in range(self.bits_per_symbol):
+                sample_index = (symbol_index * self.bits_per_symbol) + bit_pos
+                shift = self.bits_per_symbol - bit_pos - 1
+                output[sample_index] = (symbol >> shift) & 1
 
-
-        output = []
-        for i in symbol_indices:
-            for bit_pos in range(self.bits_per_symbol - 1, -1, -1):
-                output.append((i >> bit_pos) & 1)
-
-        return np.array(output, dtype=np.uint8)
+        return output
