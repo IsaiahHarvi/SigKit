@@ -50,7 +50,7 @@ class FSK(Modem):
         num_symbols = bits.shape[0]
         num_samples = num_symbols * self.sps
 
-        symbol_tones = np.zeros(num_symbols, dtype=float)
+        symbol_tones = np.zeros(num_symbols, dtype=np.float32)
         for i in range(num_symbols):
             symbol_index = 0
             for bit in bits[i]:
