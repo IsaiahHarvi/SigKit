@@ -14,12 +14,14 @@ from sigkit.datasets.procedural import ProceduralDataset
 from sigkit.models.DataModule import SigKitDataModule
 from sigkit.models.Module import SigKitClassifier
 from sigkit.modem.base import Modem
+from sigkit.modem.fsk import FSK
 from sigkit.modem.psk import PSK
 from sigkit.transforms.awgn import ApplyAWGN
 from sigkit.transforms.phase_shift import ApplyPhaseShift
 from sigkit.transforms.utils import ComplexTo2D, Normalize
 
 torch.set_float32_matmul_precision("medium")
+
 
 @click.command()
 @click.option(
@@ -52,7 +54,10 @@ def train(batch_size: int, lr: float, max_epochs: int):
     )
     val_transform = train_transform
 
-    mapping_list: List[Dict[Modem, List[int]]] = [{PSK: [2, 4, 8, 16, 32, 64]}]
+    mapping_list: List[Dict[Modem, List[int]]] = [
+        {PSK: [2, 4, 8, 16]},
+        {FSK: [2, 4, 8, 16]},
+    ]
     train_ds = ProceduralDataset(mapping_list, transform=train_transform)
     val_ds = ProceduralDataset(mapping_list, transform=val_transform, val=True, seed=42)
 
