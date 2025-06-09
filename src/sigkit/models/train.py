@@ -26,7 +26,7 @@ torch.set_float32_matmul_precision("medium")
 @click.command()
 @click.option(
     "--batch-size",
-    default=32,
+    default=128,
     type=int,
     show_default=True,
 )
