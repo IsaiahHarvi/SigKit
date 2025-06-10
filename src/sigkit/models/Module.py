@@ -77,8 +77,8 @@ class SigKitClassifier(pl.LightningModule):
     ):
         super().__init__()
         self.save_hyperparameters()
-        self.train_cm = torchmetrics.ConfusionMatrix(num_classes=self.num_classes)
-        self.val_cm = torchmetrics.ConfusionMatrix(num_classes=self.num_classes)
+        self.train_cm = torchmetrics.ConfusionMatrix(num_classes=num_classes)
+        self.val_cm = torchmetrics.ConfusionMatrix(num_classes=num_classes)
 
         self.num_classes = num_classes
         self.lr = lr
