@@ -168,7 +168,7 @@ class SigKitClassifier(pl.LightningModule):
         fig.tight_layout()
         fig.savefig("data/metrics/train_cm.png")
         plt.close(fig)
-        wandb.log({"train_cm": plt})
+        wandb.log({"train_cm": wandb.Image(fig)})
         self.train_cm.reset()
 
     def validation_step(self, batch, batch_idx):
@@ -201,7 +201,7 @@ class SigKitClassifier(pl.LightningModule):
         fig.tight_layout()
         fig.savefig("data/metrics/val_cm.png")
         plt.close(fig)
-        wandb.log({"val_cm": plt})
+        wandb.log({"val_cm": wandb.Image(fig)})
         self.val_cm.reset()
 
     def configure_optimizers(self):

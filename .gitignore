@@ -1,6 +1,8 @@
 docs/_build
 wandb/
 
+*.png
+
 
 # Python
 __pycache__/

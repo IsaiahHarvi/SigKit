@@ -6,6 +6,7 @@ torch
 lightning
 torchvision
 wandb
+plotly
 
 ruff
 icecream
