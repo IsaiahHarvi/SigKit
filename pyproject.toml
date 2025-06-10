@@ -102,7 +102,8 @@ extend-ignore = [
   "D107",  # missing docstring in __init__
 ]
 
-# [tool.ruff.lint.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
+"src/sigkit/models/Module.py" = ["I"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

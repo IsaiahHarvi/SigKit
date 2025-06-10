@@ -1,13 +1,16 @@
 """Module for constructing the Neural Network."""
 
+# NOTE: i broke the import sorting in this file somehow
+# import sorting is skipped here in pyprojtoml
+
 import lightning as pl
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchmetrics
-
 import wandb
+
 from sigkit.models.utils import get_class_name
 
 
