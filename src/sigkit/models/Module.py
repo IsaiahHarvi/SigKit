@@ -168,8 +168,8 @@ class SigKitClassifier(pl.LightningModule):
         fig.tight_layout()
         fig.savefig("data/metrics/train_cm.png")
         plt.close(fig)
-
-        self.train_confmat.reset()
+        wandb.log({"train_cm": plt})
+        self.train_cm.reset()
 
     def validation_step(self, batch, batch_idx):
         signals, labels = batch
@@ -184,8 +184,6 @@ class SigKitClassifier(pl.LightningModule):
     def on_validation_epoch_end(self):
         cm = self.val_cm.compute().cpu().numpy()
         names = [get_class_name(i) for i in range(self.num_classes)]
-        wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
-        self.logger.experiment.log({"val/confusion_matrix": wb_cm})
 
         fig, ax = plt.subplots()
         im = ax.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
@@ -203,8 +201,8 @@ class SigKitClassifier(pl.LightningModule):
         fig.tight_layout()
         fig.savefig("data/metrics/val_cm.png")
         plt.close(fig)
-
-        self.val_confmat.reset()
+        wandb.log({"val_cm": plt})
+        self.val_cm.reset()
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
