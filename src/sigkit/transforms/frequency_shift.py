@@ -1,4 +1,5 @@
 """Module for FrequencyShift Torch Transform."""
+
 from typing import Tuple, Union
 
 import numpy as np

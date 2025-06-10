@@ -49,7 +49,10 @@ def train(batch_size: int, lr: float, max_epochs: int):
                 [
                     (ApplyAWGN((-2, 30)), 1.0),
                     (ApplyPhaseShift((-np.pi, np.pi)), 0.9),
-                    (ApplyFrequencyShift((-164, 164), sample_rate=SAMPLE_RATE), 0.7), # 164 is 16% of sample rate  # noqa: E501
+                    (
+                        ApplyFrequencyShift((-164, 164), sample_rate=SAMPLE_RATE),
+                        0.7,
+                    ),  # 164 is 16% of sample rate  # noqa: E501
                 ]
             ),
             Normalize(norm=np.inf),

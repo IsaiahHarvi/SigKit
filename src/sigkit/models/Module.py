@@ -146,16 +146,19 @@ class SigKitClassifier(pl.LightningModule):
         cm = self.train_cm.compute().cpu().numpy()
         names = [get_class_name(i) for i in range(self.num_classes)]
         wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
-        self.logger.experiment.log({ "train/confusion_matrix": wb_cm })
+        self.logger.experiment.log({"train/confusion_matrix": wb_cm})
 
         fig, ax = plt.subplots()
-        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+        im = ax.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
         fig.colorbar(im, ax=ax)
         ax.set(
-            xticks=range(self.num_classes), yticks=range(self.num_classes),
-            xticklabels=names, yticklabels=names,
-            xlabel='Predicted', ylabel='True',
-            title=f'Train CM Epoch {self.current_epoch}'
+            xticks=range(self.num_classes),
+            yticks=range(self.num_classes),
+            xticklabels=names,
+            yticklabels=names,
+            xlabel="Predicted",
+            ylabel="True",
+            title=f"Train CM Epoch {self.current_epoch}",
         )
         plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
         fig.tight_layout()
@@ -178,16 +181,19 @@ class SigKitClassifier(pl.LightningModule):
         cm = self.val_cm.compute().cpu().numpy()
         names = [get_class_name(i) for i in range(self.num_classes)]
         wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
-        self.logger.experiment.log({ "val/confusion_matrix": wb_cm })
+        self.logger.experiment.log({"val/confusion_matrix": wb_cm})
 
         fig, ax = plt.subplots()
-        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+        im = ax.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
         fig.colorbar(im, ax=ax)
         ax.set(
-            xticks=range(self.num_classes), yticks=range(self.num_classes),
-            xticklabels=names, yticklabels=names,
-            xlabel='Predicted', ylabel='True',
-            title=f'Validation Confusion Matrix | E: {self.current_epoch}'
+            xticks=range(self.num_classes),
+            yticks=range(self.num_classes),
+            xticklabels=names,
+            yticklabels=names,
+            xlabel="Predicted",
+            ylabel="True",
+            title=f"Validation Confusion Matrix | E: {self.current_epoch}",
         )
         plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
         fig.tight_layout()
@@ -195,7 +201,6 @@ class SigKitClassifier(pl.LightningModule):
         plt.close(fig)
 
         self.val_confmat.reset()
-
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
