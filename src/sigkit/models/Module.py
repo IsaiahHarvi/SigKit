@@ -149,8 +149,6 @@ class SigKitClassifier(pl.LightningModule):
     def on_train_epoch_end(self):
         cm = self.train_cm.compute().cpu().numpy()
         names = [get_class_name(i) for i in range(self.num_classes)]
-        wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
-        self.logger.experiment.log({"train/confusion_matrix": wb_cm})
 
         fig, ax = plt.subplots()
         im = ax.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
