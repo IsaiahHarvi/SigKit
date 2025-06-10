@@ -143,7 +143,7 @@ class SigKitClassifier(pl.LightningModule):
         acc = (preds == labels).float().mean()
         self.log("train_loss", loss)
         self.log("train_acc", acc)
-        self.train_confmat.update(preds, labels)
+        self.train_cm.update(preds, labels)
         return loss
 
     def on_train_epoch_end(self):
