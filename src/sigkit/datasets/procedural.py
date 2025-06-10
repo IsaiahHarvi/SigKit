@@ -66,8 +66,7 @@ class ProceduralDataset(Dataset):
                         n_components=M,  # further validation in modem subclasses
                         cf=0.0,
                     )
-                    cls_name = f"{M}-{modem_cls.__name__}"  # noqa: E501 | e.g. "4-PSK" as defined in CLASS_MAP
-                    self.modems.append((modem, cls_name))
+                    self.modems.append((modem, modem.__label__()))
         if not self.modems:
             raise ValueError("No modem instances created; check mapping_list")
 

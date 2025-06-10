@@ -1,50 +1,57 @@
 # noqa
 import numpy as np
 import torch
-from icecream import ic
-from torchvision.transforms import Compose
+import click
 
 from sigkit.models.Module import SigKitClassifier
 from sigkit.modem.psk import PSK
-from sigkit.transforms.utils import ComplexTo2D, Normalize
+from sigkit.modem.fsk import FSK
+from sigkit.transforms.utils import InferenceTransform
+from sigkit.transforms.awgn import ApplyAWGN
+from sigkit.models.utils import get_class_index
 
 
-def main():
+SAMPLE_RATE = 1024
+SYMBOL_RATE = 32
+
+
+@click.command()
+@click.option("-n", "--n_signals", default=32)
+def main(n_signals):
     ckpt_path = "data/checkpoints/best.ckpt"
-    model = SigKitClassifier.load_from_checkpoint(ckpt_path, num_classes=6)
+    model = SigKitClassifier.load_from_checkpoint(ckpt_path)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
-
     model.eval()
 
-    transform = Compose(
-        [
-            Normalize(norm=np.inf),
-            ComplexTo2D(),
+    modems = []
+
+    for modulator in [PSK, FSK]:
+        for n_components in [2, 4, 8, 16]:
+            modems.append(modulator(SAMPLE_RATE, SYMBOL_RATE, n_components))
+
+    for modem in modems:
+        num_symbols = 4096 // modem.sps
+        bitstreams = [
+            np.random.randint(
+                0, 2, size=(num_symbols * modem.bits_per_symbol,), dtype=np.uint8
+            )
+            for _ in range(n_signals)
         ]
-    )
+        tensors = [modem.modulate(bits).to_tensor() for bits in bitstreams]
 
-    modem = PSK(1024, 32, 4)
-    num_symbols = 4096 // modem.sps
-    bitstreams = [
-        np.random.randint(
-            0, 2, size=(num_symbols * modem.bits_per_symbol,), dtype=np.uint8
-        )
-        for _ in range(32)
-    ]
+        transform = ApplyAWGN((-20, 30))
+        tensors = [transform(sig) for sig in tensors]
 
-    waveforms = [modem.modulate(bits).samples for bits in bitstreams]
 
-    tensors = [torch.tensor(w, dtype=torch.complex64) for w in waveforms]
-    transformed = [transform(w) for w in tensors]
-    batch = torch.stack(transformed).to(device)
+        x = torch.stack([InferenceTransform(sig) for sig in tensors]).to(device)
+        with torch.no_grad():
+            preds = model(x)
+            predicted = torch.argmax(preds, dim=1)
+            acc = (predicted == get_class_index(modem.__label__())).float().mean()
 
-    with torch.no_grad():
-        preds = model(batch)
-        predicted_classes = torch.argmax(preds, dim=1)
-
-    ic("Predicted class indices:", predicted_classes.tolist())
+        print(f"{modem.__label__()}: {acc*100:2f}%")
 
 
 if __name__ == "__main__":
