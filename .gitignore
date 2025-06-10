@@ -1,4 +1,3 @@
-docs/_build
 wandb/
 
 *.png
@@ -11,4 +10,9 @@ uv.lock
 **.pyc
 .ruff_cache/
 .venv/
+
+# Build
+docs/_build
 dist/
+*.tar.gz
+*.whl

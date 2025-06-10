@@ -8,7 +8,6 @@ import torch.nn.functional as F
 import torchmetrics
 
 import wandb
-
 from sigkit.models.utils import get_class_name
 
 
