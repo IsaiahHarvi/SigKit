@@ -1,9 +1,14 @@
 """Module for constructing the Neural Network."""
 
 import lightning as pl
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torchmetrics
+
+import wandb
+from sigkit.models.utils import get_class_name
 
 
 class ResidualUnit1d(nn.Module):
@@ -72,6 +77,9 @@ class SigKitClassifier(pl.LightningModule):
     ):
         super().__init__()
         self.save_hyperparameters()
+        self.train_cm = torchmetrics.ConfusionMatrix(num_classes=self.num_classes)
+        self.val_cm = torchmetrics.ConfusionMatrix(num_classes=self.num_classes)
+
         self.num_classes = num_classes
         self.lr = lr
 
@@ -131,7 +139,30 @@ class SigKitClassifier(pl.LightningModule):
         acc = (preds == labels).float().mean()
         self.log("train_loss", loss)
         self.log("train_acc", acc)
+        self.train_confmat.update(preds, labels)
         return loss
+
+    def training_epoch_end(self, outputs):
+        cm = self.train_cm.compute().cpu().numpy()
+        names = [get_class_name(i) for i in range(self.num_classes)]
+        wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
+        self.logger.experiment.log({ "train/confusion_matrix": wb_cm })
+
+        fig, ax = plt.subplots()
+        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+        fig.colorbar(im, ax=ax)
+        ax.set(
+            xticks=range(self.num_classes), yticks=range(self.num_classes),
+            xticklabels=names, yticklabels=names,
+            xlabel='Predicted', ylabel='True',
+            title=f'Train CM Epoch {self.current_epoch}'
+        )
+        plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
+        fig.tight_layout()
+        fig.savefig("data/metrics/train_cm.png")
+        plt.close(fig)
+
+        self.train_confmat.reset()
 
     def validation_step(self, batch, batch_idx):
         signals, labels = batch
@@ -141,6 +172,30 @@ class SigKitClassifier(pl.LightningModule):
         acc = (preds == labels).float().mean()
         self.log("val_loss", loss, prog_bar=True)
         self.log("val_acc", acc, prog_bar=True)
+        self.val_cm.update(preds, labels)
+
+    def validation_epoch_end(self, outputs):
+        cm = self.val_cm.compute().cpu().numpy()
+        names = [get_class_name(i) for i in range(self.num_classes)]
+        wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
+        self.logger.experiment.log({ "val/confusion_matrix": wb_cm })
+
+        fig, ax = plt.subplots()
+        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+        fig.colorbar(im, ax=ax)
+        ax.set(
+            xticks=range(self.num_classes), yticks=range(self.num_classes),
+            xticklabels=names, yticklabels=names,
+            xlabel='Predicted', ylabel='True',
+            title=f'Validation Confusion Matrix | E: {self.current_epoch}'
+        )
+        plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
+        fig.tight_layout()
+        fig.savefig("data/metrics/val_cm.png")
+        plt.close(fig)
+
+        self.val_confmat.reset()
+
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)

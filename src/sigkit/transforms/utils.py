@@ -46,6 +46,17 @@ class Normalize(nn.Module):
         return (x / norm).to(torch.complex64)
 
 
+class RandomApplyProb(nn.Module):
+    """Apply a list of transforms with a given probability per transform."""
+    def __init__(self, transforms_p: list[tuple[nn.Module, float]]):
+        self.transforms_p = transforms_p
+
+    def __call__(self, x):
+        for transform, p in self.transforms_p:
+            if torch.rand(1).item() < p:
+                x = transform(x)
+        return x
+
 """Transform to prepare a complex tensor for inference."""
 InferenceTransform = Compose(
     [

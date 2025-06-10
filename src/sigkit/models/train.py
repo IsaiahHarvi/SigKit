@@ -8,7 +8,7 @@ import numpy as np
 import torch
 from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
 from lightning.pytorch.loggers import WandbLogger
-from torchvision.transforms import Compose, RandomApply
+from torchvision.transforms import Compose
 
 from sigkit.datasets.procedural import ProceduralDataset
 from sigkit.models.DataModule import SigKitDataModule
@@ -17,10 +17,13 @@ from sigkit.modem.base import Modem
 from sigkit.modem.fsk import FSK
 from sigkit.modem.psk import PSK
 from sigkit.transforms.awgn import ApplyAWGN
+from sigkit.transforms.frequency_shift import ApplyFrequencyShift
 from sigkit.transforms.phase_shift import ApplyPhaseShift
-from sigkit.transforms.utils import ComplexTo2D, Normalize
+from sigkit.transforms.utils import ComplexTo2D, Normalize, RandomApplyProb
 
 torch.set_float32_matmul_precision("medium")
+
+SAMPLE_RATE = 1024
 
 
 @click.command()
@@ -36,16 +39,17 @@ torch.set_float32_matmul_precision("medium")
     default=10000,
     type=int,
     show_default=True,
-    help="Maximum number of epochs if not using early stop",
+    help="Maximum number of epochs, arbitrarily large for early stop",
 )
 def train(batch_size: int, lr: float, max_epochs: int):
     """Train the SigKitClassifier on SigKit datasets."""
     train_transform = Compose(
         [
-            RandomApply(
+            RandomApplyProb(
                 [
-                    ApplyPhaseShift((-np.pi, np.pi)),
-                    ApplyAWGN((-2, 30)),
+                    (ApplyAWGN((-2, 30)), 1.0),
+                    (ApplyPhaseShift((-np.pi, np.pi)), 0.9),
+                    (ApplyFrequencyShift((-164, 164), sample_rate=SAMPLE_RATE), 0.7), # 164 is 16% of sample rate  # noqa: E501
                 ]
             ),
             Normalize(norm=np.inf),

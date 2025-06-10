@@ -7,7 +7,7 @@ from sigkit.core.base import SigKitError
 
 
 class ApplyAWGN(nn.Module):
-    """Additive White Gaussian Noise Torch Transform with optional SNR range.
+    """Applies Additive White Gaussian Noise to reach a target SNR.
 
     Args:
         snr_db:
