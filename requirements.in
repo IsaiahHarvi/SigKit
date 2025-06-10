@@ -9,5 +9,6 @@ wandb
 plotly
 
 ruff
+isort  # ruff should be handling this
 icecream
 pytest

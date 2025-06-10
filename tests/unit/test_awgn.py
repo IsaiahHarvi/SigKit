@@ -1,11 +1,11 @@
-import pytest
 import numpy as np
+import pytest
 import torch
 
+from sigkit.core.base import Signal
+from sigkit.impairments.awgn import AWGN
 from sigkit.metrics.integrity import estimate_snr
 from sigkit.transforms.awgn import ApplyAWGN
-from sigkit.impairments.awgn import AWGN
-from sigkit.core.base import Signal
 
 
 @pytest.mark.parametrize("snr_db", [0, 10, 20, 30])
