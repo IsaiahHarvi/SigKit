@@ -142,7 +142,7 @@ class SigKitClassifier(pl.LightningModule):
         self.train_confmat.update(preds, labels)
         return loss
 
-    def on_train_epoch_end(self, outputs):
+    def on_train_epoch_end(self):
         cm = self.train_cm.compute().cpu().numpy()
         names = [get_class_name(i) for i in range(self.num_classes)]
         wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
@@ -177,7 +177,7 @@ class SigKitClassifier(pl.LightningModule):
         self.log("val_acc", acc, prog_bar=True)
         self.val_cm.update(preds, labels)
 
-    def on_validation_epoch_end(self, outputs):
+    def on_validation_epoch_end(self):
         cm = self.val_cm.compute().cpu().numpy()
         names = [get_class_name(i) for i in range(self.num_classes)]
         wb_cm = wandb.plot.confusion_matrix(matrix=cm, class_names=names)
