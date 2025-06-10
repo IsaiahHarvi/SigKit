@@ -1,15 +1,14 @@
 # noqa
+import click
 import numpy as np
 import torch
-import click
 
 from sigkit.models.Module import SigKitClassifier
-from sigkit.modem.psk import PSK
-from sigkit.modem.fsk import FSK
-from sigkit.transforms.utils import InferenceTransform
-from sigkit.transforms.awgn import ApplyAWGN
 from sigkit.models.utils import get_class_index
-
+from sigkit.modem.fsk import FSK
+from sigkit.modem.psk import PSK
+from sigkit.transforms.awgn import ApplyAWGN
+from sigkit.transforms.utils import InferenceTransform
 
 SAMPLE_RATE = 1024
 SYMBOL_RATE = 32
@@ -43,7 +42,6 @@ def main(n_signals):
 
         transform = ApplyAWGN((-20, 30))
         tensors = [transform(sig) for sig in tensors]
-
 
         x = torch.stack([InferenceTransform(sig) for sig in tensors]).to(device)
         with torch.no_grad():
