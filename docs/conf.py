@@ -8,12 +8,14 @@
 import os
 import sys
 
+from importlib.metadata import version
+
 sys.path.insert(0, os.path.abspath("../src/"))
 
 project = "SigKit"
-copyright = "2025, Isaiah Harville, Joshua Payne"
+copyright = "2025, Isaiah Harville and Joshua Payne"
 author = "Isaiah Harville, Joshua Payne"
-release = "0.0.1"
+release = version("SigKit")  # doc version is set to pypi version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
