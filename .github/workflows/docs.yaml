@@ -18,6 +18,12 @@ jobs:
       - run: git lfs install --skip-smudge
 
       - uses: actions/checkout@v3
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -25,8 +31,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install sphinx piccolo_theme
-          pip install -e .
+          uv pip install --system sphinx piccolo_theme tomli
+          uv pip install --system -e .
 
       - name: Build HTML
         run: |
