@@ -27,9 +27,7 @@ class FSK(Modem):
                 f"samples_per_symbol ({self.sps}) must be ≥ {n_components=})"
             )
 
-        tones = [
-            (cf + (i * symbol_rate)) for i in range(n_components)
-        ]
+        tones = [(cf + (i * symbol_rate)) for i in range(n_components)]
         self.tones = np.array(tones, dtype=np.float32)
 
     def modulate(self, bits: np.ndarray) -> Signal:
@@ -62,7 +60,7 @@ class FSK(Modem):
         samples = np.zeros(num_samples, dtype=np.complex64)
         for i in range(num_symbols):
             symbol_tone = symbol_tones[i]
-            base = (2. * np.pi * symbol_tone) / self.sample_rate
+            base = (2.0 * np.pi * symbol_tone) / self.sample_rate
 
             phase = base * np.arange(self.sps)
             i_samples = np.cos(phase)

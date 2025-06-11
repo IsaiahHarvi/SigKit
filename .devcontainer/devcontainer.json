@@ -18,7 +18,11 @@
     }
   },
   "postCreateCommand": "bash .devcontainer/setup.sh",
-
+  "containerEnv": {
+    "IN_SIGKIT_CONTAINER": "true",
+    "PYTHONPATH": "/workspaces/Sigkit/src",
+    "UV_SYSTEM_PYTHON": "1"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -34,8 +38,6 @@
   "runArgs": [
     "--shm-size=4g",
     "--name",
-    "SigKit-DevContainer",
-    "--env-file",
-    ".devcontainer/dev.env"
+    "SigKit-DevContainer"
   ]
 }

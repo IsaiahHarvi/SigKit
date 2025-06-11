@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 from torchvision.transforms import Compose
 
 from sigkit.core.base import Signal
-from sigkit.models.utils import CLASS_MAP
+from sigkit.models.utils import get_class_index
 from sigkit.modem.base import Modem
 
 
@@ -66,8 +66,7 @@ class ProceduralDataset(Dataset):
                         n_components=M,  # further validation in modem subclasses
                         cf=0.0,
                     )
-                    cls_idx = f"{M}-{modem_cls.__name__}"
-                    self.modems.append((modem, cls_idx))
+                    self.modems.append((modem, modem.__label__()))
         if not self.modems:
             raise ValueError("No modem instances created; check mapping_list")
 
@@ -75,7 +74,7 @@ class ProceduralDataset(Dataset):
         return int(self.length)
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, int]:
-        modem, cls_idx = random.choice(self.modems)
+        modem, label_name = random.choice(self.modems)
 
         if (4096 % modem.sps) != 0:
             raise ValueError(f"Desired length 4096 not divisible by {modem.sps=}")
@@ -95,4 +94,4 @@ class ProceduralDataset(Dataset):
         if self.transform is not None:
             signal = self.transform(signal)
 
-        return signal, CLASS_MAP[cls_idx]
+        return signal, get_class_index(label_name)

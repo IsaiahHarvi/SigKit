@@ -39,6 +39,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: git lfs install --skip-smudge
+
       - uses: actions/checkout@v4
 
       - name: Install uv
@@ -53,7 +55,7 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          uv pip install --system ruff
+          uv pip install --system -e .
 
       - name: Run ruff
         run: ruff check .

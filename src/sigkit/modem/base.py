@@ -61,6 +61,10 @@ class Modem(ABC):
         self.cf = cf
         self.sps: int = sample_rate // symbol_rate  # samples per symbol
         self.bits_per_symbol = int(np.log2(n_components))
+        self.n_components = n_components
+
+    def __label__(self) -> str:
+        return f"{self.n_components}-{self.__class__.__name__}"
 
     @abstractmethod
     def modulate(self, bits: np.ndarray) -> Signal:

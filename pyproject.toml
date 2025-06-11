@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools >= 80.9.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "sigkit"
 version = "0.0.1"
@@ -8,6 +12,8 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = [
     "aiohappyeyeballs==2.6.1",
     "aiohttp==3.12.4",
@@ -40,11 +46,13 @@ dependencies = [
     "matplotlib==3.10.3",
     "mpmath==1.3.0",
     "multidict==6.4.4",
+    "narwhals==1.42.0",
     "networkx==3.4.2",
     "numpy==2.2.6",
     "packaging==24.2",
     "pillow==11.2.1",
     "platformdirs==4.3.8",
+    "plotly==6.1.2",
     "pluggy==1.6.0",
     "propcache==0.3.1",
     "protobuf==6.31.1",
@@ -61,7 +69,6 @@ dependencies = [
     "ruff==0.11.11",
     "sentry-sdk==2.29.1",
     "setproctitle==1.3.6",
-    "setuptools==80.9.0",
     "six==1.17.0",
     "smmap==5.0.2",
     "sympy==1.14.0",
@@ -99,6 +106,13 @@ extend-ignore = [
   "D107",  # missing docstring in __init__
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"src/sigkit/models/Module.py" = ["I"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["sigkit"]
+
+[project.urls]
+Homepage = "https://github.com/IsaiahHarvi/SigKit"
+Documentation = "https://isaiahharvi.github.io/SigKit/api/modules.html"
