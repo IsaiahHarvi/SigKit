@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python Module Index &#8212; SigKit 0.0.1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-    <link rel="stylesheet" type="text/css" href="_static/basic_mod.css?v=9b2032db" />
-    <script src="_static/documentation_options.js?v=d45e8c67"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/js/theme.js"></script>
-    <script src="_static/js/petite-vue.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
- 
-
-
+    <title>sigkit.transforms.utils &#8212; SigKit 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic_mod.css?v=9b2032db" />
+    <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <script src="../../../_static/js/petite-vue.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
   </head><body data-dark_mode_code_blocks="true">
 
 <div id="top_nav">
@@ -30,7 +27,7 @@
         <p id="toggle_sidebar">
             <a href="#" title="Toggle sidebar">|||</a>
         </p>
-        <h1><a href="index.html" title="Go to homepage">SigKit 0.0.1 documentation</a></h1>
+        <h1><a href="../../../index.html" title="Go to homepage">SigKit 0.0.1 documentation</a></h1>
 
         <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
     <template v-if="mode == 'light'">
@@ -92,7 +89,7 @@
 })()
 </script>
             <p class="mobile_search_link">
-                <a href="search.html" title="Search">
+                <a href="../../../search.html" title="Search">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
                         <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
                     </svg>
@@ -105,7 +102,7 @@
 <search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
@@ -119,7 +116,7 @@
     
       <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper"><ul>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">sigkit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">sigkit</a></li>
 </ul>
 
         </div>
@@ -131,125 +128,90 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
+  <h1>Source code for sigkit.transforms.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility module for SigKit transforms.&quot;&quot;&quot;</span>
 
-   <h1>Python Module Index</h1>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">Compose</span>
 
-   <div class="modindex-jumpbox">
-   <a href="#cap-s"><strong>s</strong></a>
-   </div>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SigKitError</span>
 
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-s"><td></td><td>
-       <strong>s</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <a href="api/sigkit.html#module-sigkit"><code class="xref">sigkit</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.core.html#module-sigkit.core"><code class="xref">sigkit.core</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.core.html#module-sigkit.core.base"><code class="xref">sigkit.core.base</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.datasets.html#module-sigkit.datasets"><code class="xref">sigkit.datasets</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.datasets.html#module-sigkit.datasets.procedural"><code class="xref">sigkit.datasets.procedural</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.impairments.html#module-sigkit.impairments"><code class="xref">sigkit.impairments</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.impairments.html#module-sigkit.impairments.awgn"><code class="xref">sigkit.impairments.awgn</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.impairments.html#module-sigkit.impairments.base"><code class="xref">sigkit.impairments.base</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.impairments.html#module-sigkit.impairments.frequency_shift"><code class="xref">sigkit.impairments.frequency_shift</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.impairments.html#module-sigkit.impairments.phase_shift"><code class="xref">sigkit.impairments.phase_shift</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.metrics.html#module-sigkit.metrics"><code class="xref">sigkit.metrics</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.metrics.html#module-sigkit.metrics.integrity"><code class="xref">sigkit.metrics.integrity</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.metrics.html#module-sigkit.metrics.visuals"><code class="xref">sigkit.metrics.visuals</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.modem.html#module-sigkit.modem"><code class="xref">sigkit.modem</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.modem.html#module-sigkit.modem.base"><code class="xref">sigkit.modem.base</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.modem.html#module-sigkit.modem.fsk"><code class="xref">sigkit.modem.fsk</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.modem.html#module-sigkit.modem.psk"><code class="xref">sigkit.modem.psk</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.transforms.html#module-sigkit.transforms"><code class="xref">sigkit.transforms</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.transforms.html#module-sigkit.transforms.awgn"><code class="xref">sigkit.transforms.awgn</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.transforms.html#module-sigkit.transforms.phase_shift"><code class="xref">sigkit.transforms.phase_shift</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="api/sigkit.transforms.html#module-sigkit.transforms.utils"><code class="xref">sigkit.transforms.utils</code></a></td><td>
-       <em></em></td></tr>
-   </table>
 
+<div class="viewcode-block" id="ComplexTo2D">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.utils.ComplexTo2D">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ComplexTo2D</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert to the expected input of the model for training.</span>
+
+<span class="sd">    Transform a 1D torch.Tensor of dtype=torch.complex64 and shape (N,)</span>
+<span class="sd">    into a 2×N torch.Tensor of dtype=torch.float32:</span>
+<span class="sd">      - Row 0 = real part</span>
+<span class="sd">      - Row 1 = imaginary part</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        x = torch.randn(4096) + 1j * torch.randn(4096)</span>
+<span class="sd">        x = x.to(torch.complex64)</span>
+<span class="sd">        iq = ComplexTo2D(x)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ComplexTo2D.forward">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.utils.ComplexTo2D.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected a torch.Tensor, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">complex64</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected dtype=torch.complex64, got </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SigKitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ComplexTo2D expects a 1D tensor, got </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">real</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># shape (N,), dtype float32</span>
+        <span class="n">imag</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># shape (N,), dtype float32</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># shape (2, N), dtype float32</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Normalize">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.utils.Normalize">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Normalize</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize the input data.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">norm_order</span> <span class="o">=</span> <span class="n">norm</span>
+
+<div class="viewcode-block" id="Normalize.forward">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.utils.Normalize.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_order</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">norm</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RandomApplyProb">
+<a class="viewcode-back" href="../../../api/sigkit.transforms.html#sigkit.transforms.utils.RandomApplyProb">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RandomApplyProb</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a list of transforms with a given probability per transform.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transforms_p</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transforms_p</span> <span class="o">=</span> <span class="n">transforms_p</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">transform</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms_p</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span></div>
+
+
+
+<span class="n">InferenceTransform</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span>  <span class="c1"># convert complex tensor for inference</span>
+    <span class="p">[</span>
+        <span class="n">Normalize</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)),</span>
+        <span class="n">ComplexTo2D</span><span class="p">(),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
 
             <div class="clearer"></div>
           </div>
