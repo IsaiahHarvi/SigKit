@@ -46,6 +46,7 @@ class Normalize(nn.Module):
         return (x / norm).to(torch.complex64)
 
 
+<<<<<<< Updated upstream
 class RandomApplyProb(nn.Module):
     """Apply a list of transforms with a given probability per transform."""
 
@@ -59,8 +60,7 @@ class RandomApplyProb(nn.Module):
         return x
 
 
-"""Transform to prepare a complex tensor for inference."""
-InferenceTransform = Compose(
+InferenceTransform = Compose(  # convert complex tensor for inference
     [
         Normalize(norm=float("inf")),
         ComplexTo2D(),

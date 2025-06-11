@@ -7,15 +7,18 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 import sys
-
-from importlib.metadata import version
+import tomli
 
 sys.path.insert(0, os.path.abspath("../src/"))
+
+with open("../pyproject.toml", "rb") as f:
+    toml = tomli.load(f)
+pyproject = toml["project"]
 
 project = "SigKit"
 copyright = "2025, Isaiah Harville and Joshua Payne"
 author = "Isaiah Harville, Joshua Payne"
-release = version("SigKit")  # doc version is set to pypi version
+release = pyproject["version"]
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -39,8 +42,3 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_static_path = ["_static"]
 html_theme = "piccolo_theme"
-html_theme_options = {
-    "logo": {"text": "SigKit"},
-    "show_prev_next": False,
-    "navigation_depth": 2,
-}

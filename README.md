@@ -103,7 +103,7 @@ Inside the container you’ll have all dependencies installed and SigKit ready t
 
   ```bash
   # Install the optional dependencies [docs] or:
-  pip install sphinx piccolo_theme
+  pip install sphinx piccolo_theme tomli
 
   ./docs/gen.sh
   ```

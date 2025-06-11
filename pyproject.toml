@@ -86,7 +86,8 @@ dependencies = [
 [project.optional-dependencies]
 docs = [
     "sphinx",
-    "piccolo_theme"
+    "piccolo_theme",
+    "tomli"
 ]
 
 [tool.ruff]
