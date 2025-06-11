@@ -46,7 +46,6 @@ class Normalize(nn.Module):
         return (x / norm).to(torch.complex64)
 
 
-<<<<<<< Updated upstream
 class RandomApplyProb(nn.Module):
     """Apply a list of transforms with a given probability per transform."""
 
