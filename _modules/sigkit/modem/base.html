@@ -194,6 +194,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cf</span> <span class="o">=</span> <span class="n">cf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">sample_rate</span> <span class="o">//</span> <span class="n">symbol_rate</span>  <span class="c1"># samples per symbol</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bits_per_symbol</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n_components</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__label__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
 
 <div class="viewcode-block" id="Modem.modulate">
 <a class="viewcode-back" href="../../../api/sigkit.modem.html#sigkit.modem.base.Modem.modulate">[docs]</a>
@@ -262,7 +266,7 @@
 
 
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Isaiah Harville, Joshua Payne.
+    &#169; Copyright 2025, Isaiah Harville and Joshua Payne.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
 

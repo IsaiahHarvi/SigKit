@@ -185,6 +185,48 @@ returns a Signal with samples.shape == (…, 2, n_samples).</p>
 </dd></dl>
 
 </section>
+<section id="module-sigkit.modem.fsk">
+<span id="sigkit-modem-fsk-module"></span><h2>sigkit.modem.fsk module<a class="headerlink" href="#module-sigkit.modem.fsk" title="Link to this heading">¶</a></h2>
+<p>Frequency Shift Keying Module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sigkit.modem.fsk.FSK">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.modem.fsk.</span></span><span class="sig-name descname"><span class="pre">FSK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/modem/fsk.html#FSK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.modem.fsk.FSK" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sigkit.modem.base.Modem" title="sigkit.modem.base.Modem"><code class="xref py py-class docutils literal notranslate"><span class="pre">Modem</span></code></a></p>
+<p>FSK Modem for modulating and demodulating bits.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.modem.fsk.FSK.demodulate">
+<span class="sig-name descname"><span class="pre">demodulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/sigkit/modem/fsk.html#FSK.demodulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.modem.fsk.FSK.demodulate" title="Link to this definition">¶</a></dt>
+<dd><p>Map received FSK samples to bits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>signal</strong> – Signal containing modulated complex samples.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1D array of bits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.modem.fsk.FSK.modulate">
+<span class="sig-name descname"><span class="pre">modulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal"><span class="pre">Signal</span></a></span></span><a class="reference internal" href="../_modules/sigkit/modem/fsk.html#FSK.modulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.modem.fsk.FSK.modulate" title="Link to this definition">¶</a></dt>
+<dd><p>Modulate bits with FSK.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bits</strong> – 1D array of 0 | 1, length multiple of log2(n_components)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>containing complex64 samples</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="sigkit.core.html#sigkit.core.base.Signal" title="sigkit.core.base.Signal">Signal</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-sigkit.modem.psk">
 <span id="sigkit-modem-psk-module"></span><h2>sigkit.modem.psk module<a class="headerlink" href="#module-sigkit.modem.psk" title="Link to this heading">¶</a></h2>
 <p>Phase Shift Keying Module.</p>
@@ -254,6 +296,14 @@ returns a Signal with samples.shape == (…, 2, n_samples).</p>
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-sigkit.modem.fsk">sigkit.modem.fsk module</a><ul>
+<li><a class="reference internal" href="#sigkit.modem.fsk.FSK"><code class="docutils literal notranslate"><span class="pre">FSK</span></code></a><ul>
+<li><a class="reference internal" href="#sigkit.modem.fsk.FSK.demodulate"><code class="docutils literal notranslate"><span class="pre">FSK.demodulate()</span></code></a></li>
+<li><a class="reference internal" href="#sigkit.modem.fsk.FSK.modulate"><code class="docutils literal notranslate"><span class="pre">FSK.modulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-sigkit.modem.psk">sigkit.modem.psk module</a><ul>
 <li><a class="reference internal" href="#sigkit.modem.psk.PSK"><code class="docutils literal notranslate"><span class="pre">PSK</span></code></a><ul>
 <li><a class="reference internal" href="#sigkit.modem.psk.PSK.demodulate"><code class="docutils literal notranslate"><span class="pre">PSK.demodulate()</span></code></a></li>
@@ -291,7 +341,7 @@ returns a Signal with samples.shape == (…, 2, n_samples).</p>
 
 
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Isaiah Harville, Joshua Payne.
+    &#169; Copyright 2025, Isaiah Harville and Joshua Payne.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
 

@@ -153,7 +153,7 @@
 <dt class="sig sig-object py" id="sigkit.transforms.awgn.ApplyAWGN">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.transforms.awgn.</span></span><span class="sig-name descname"><span class="pre">ApplyAWGN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snr_db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/transforms/awgn.html#ApplyAWGN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.awgn.ApplyAWGN" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Additive White Gaussian Noise Torch Transform with optional SNR range.</p>
+<p>Applies Additive White Gaussian Noise to reach a target SNR.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>snr_db</strong> – <ul class="simple">
@@ -208,63 +208,8 @@ random uniform phi from [min_phase, max_phase] per call</p></li>
 </dd></dl>
 
 </section>
-<section id="module-sigkit.transforms.utils">
-<span id="sigkit-transforms-utils-module"></span><h2>sigkit.transforms.utils module<a class="headerlink" href="#module-sigkit.transforms.utils" title="Link to this heading">¶</a></h2>
-<p>Utility module for SigKit transforms.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="sigkit.transforms.utils.ComplexTo2D">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.transforms.utils.</span></span><span class="sig-name descname"><span class="pre">ComplexTo2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/transforms/utils.html#ComplexTo2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.utils.ComplexTo2D" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Convert to the expected input of the model for training.</p>
-<p>Transform a 1D torch.Tensor of dtype=torch.complex64 and shape (N,)
-into a 2×N torch.Tensor of dtype=torch.float32:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Row 0 = real part</p></li>
-<li><p>Row 1 = imaginary part</p></li>
-</ul>
-</div></blockquote>
-<p class="rubric">Example</p>
-<p>x = torch.randn(4096) + 1j * torch.randn(4096)
-x = x.to(torch.complex64)
-iq = ComplexTo2D(x)</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="sigkit.transforms.utils.ComplexTo2D.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/transforms/utils.html#ComplexTo2D.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.utils.ComplexTo2D.forward" title="Link to this definition">¶</a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="sigkit.transforms.utils.Normalize">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.transforms.utils.</span></span><span class="sig-name descname"><span class="pre">Normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/transforms/utils.html#Normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.utils.Normalize" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Normalize the input data.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="sigkit.transforms.utils.Normalize.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../_modules/sigkit/transforms/utils.html#Normalize.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.utils.Normalize.forward" title="Link to this definition">¶</a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
-</dd></dl>
-
-</dd></dl>
-
+<section id="sigkit-transforms-utils-module">
+<h2>sigkit.transforms.utils module<a class="headerlink" href="#sigkit-transforms-utils-module" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -298,17 +243,7 @@ registered hooks while the latter silently ignores them.</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-sigkit.transforms.utils">sigkit.transforms.utils module</a><ul>
-<li><a class="reference internal" href="#sigkit.transforms.utils.ComplexTo2D"><code class="docutils literal notranslate"><span class="pre">ComplexTo2D</span></code></a><ul>
-<li><a class="reference internal" href="#sigkit.transforms.utils.ComplexTo2D.forward"><code class="docutils literal notranslate"><span class="pre">ComplexTo2D.forward()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#sigkit.transforms.utils.Normalize"><code class="docutils literal notranslate"><span class="pre">Normalize</span></code></a><ul>
-<li><a class="reference internal" href="#sigkit.transforms.utils.Normalize.forward"><code class="docutils literal notranslate"><span class="pre">Normalize.forward()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#sigkit-transforms-utils-module">sigkit.transforms.utils module</a></li>
 </ul>
 </li>
 </ul>
@@ -336,7 +271,7 @@ registered hooks while the latter silently ignores them.</p>
 
 
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Isaiah Harville, Joshua Payne.
+    &#169; Copyright 2025, Isaiah Harville and Joshua Payne.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
 

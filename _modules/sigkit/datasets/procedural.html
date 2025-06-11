@@ -140,7 +140,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">Compose</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.core.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.models.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">CLASS_MAP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.models.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_class_index</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sigkit.modem.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Modem</span>
 
 
@@ -199,8 +199,7 @@
                         <span class="n">n_components</span><span class="o">=</span><span class="n">M</span><span class="p">,</span>  <span class="c1"># further validation in modem subclasses</span>
                         <span class="n">cf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                     <span class="p">)</span>
-                    <span class="n">cls_idx</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">modem_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">modems</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">modem</span><span class="p">,</span> <span class="n">cls_idx</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">modems</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">modem</span><span class="p">,</span> <span class="n">modem</span><span class="o">.</span><span class="n">__label__</span><span class="p">()))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">modems</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No modem instances created; check mapping_list&quot;</span><span class="p">)</span>
 
@@ -208,7 +207,7 @@
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="n">modem</span><span class="p">,</span> <span class="n">cls_idx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modems</span><span class="p">)</span>
+        <span class="n">modem</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modems</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="mi">4096</span> <span class="o">%</span> <span class="n">modem</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Desired length 4096 not divisible by </span><span class="si">{</span><span class="n">modem</span><span class="o">.</span><span class="n">sps</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -228,7 +227,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">signal</span><span class="p">,</span> <span class="n">CLASS_MAP</span><span class="p">[</span><span class="n">cls_idx</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">signal</span><span class="p">,</span> <span class="n">get_class_index</span><span class="p">(</span><span class="n">label_name</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -254,7 +253,7 @@
 
 
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Isaiah Harville, Joshua Payne.
+    &#169; Copyright 2025, Isaiah Harville and Joshua Payne.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
 

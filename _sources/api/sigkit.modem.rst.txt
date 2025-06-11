@@ -17,6 +17,14 @@ sigkit.modem.base module
    :show-inheritance:
    :undoc-members:
 
+sigkit.modem.fsk module
+-----------------------
+
+.. automodule:: sigkit.modem.fsk
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 sigkit.modem.psk module
 -----------------------
 
