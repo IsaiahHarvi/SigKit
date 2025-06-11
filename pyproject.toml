@@ -8,6 +8,12 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.11"
+classifiers =
+    Development Status :: 4 - Beta
+    Intended Audience :: Developers
+    Intended Audience :: Science/Research
+    License :: OSI Approved :: MIT License
+    Operating System :: OS Independent
 dependencies = [
     "aiohappyeyeballs==2.6.1",
     "aiohttp==3.12.4",
@@ -98,8 +104,6 @@ extend-ignore = [
   "D106",  # missing docstring in public nested function
   "D107",  # missing docstring in __init__
 ]
-
-# [tool.ruff.lint.per-file-ignores]
 
 [tool.setuptools.packages.find]
 where = ["src"]
