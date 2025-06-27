@@ -17,6 +17,14 @@ sigkit.transforms.awgn module
    :show-inheritance:
    :undoc-members:
 
+sigkit.transforms.frequency\_shift module
+-----------------------------------------
+
+.. automodule:: sigkit.transforms.frequency_shift
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 sigkit.transforms.phase\_shift module
 -------------------------------------
 

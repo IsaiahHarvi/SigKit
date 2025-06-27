@@ -181,6 +181,39 @@ uniformly from [min_snr_db, max_snr_db] each all.</p></li>
 </dd></dl>
 
 </section>
+<section id="module-sigkit.transforms.frequency_shift">
+<span id="sigkit-transforms-frequency-shift-module"></span><h2>sigkit.transforms.frequency_shift module<a class="headerlink" href="#module-sigkit.transforms.frequency_shift" title="Link to this heading">¶</a></h2>
+<p>Module for FrequencyShift Torch Transform.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sigkit.transforms.frequency_shift.ApplyFrequencyShift">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sigkit.transforms.frequency_shift.</span></span><span class="sig-name descname"><span class="pre">ApplyFrequencyShift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sigkit/transforms/frequency_shift.html#ApplyFrequencyShift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.frequency_shift.ApplyFrequencyShift" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Apply a constant or random frequency offset to a 1D complex64 torch.Tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>freq_offset</strong> – <ul>
+<li><p>If a single float or int: apply that fixed frequency (in Hz).</p></li>
+<li><p>If a tuple/list of two floats: (min_freq, max_freq), pick
+random uniform from [min_freq, max_freq] per call.</p></li>
+</ul>
+</p></li>
+<li><p><strong>sample_rate</strong> – <ul>
+<li><p>Sampling rate of the signal (in samples per second).</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sigkit.transforms.frequency_shift.ApplyFrequencyShift.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../_modules/sigkit/transforms/frequency_shift.html#ApplyFrequencyShift.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sigkit.transforms.frequency_shift.ApplyFrequencyShift.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the frequency shift to the Tensor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-sigkit.transforms.phase_shift">
 <span id="sigkit-transforms-phase-shift-module"></span><h2>sigkit.transforms.phase_shift module<a class="headerlink" href="#module-sigkit.transforms.phase_shift" title="Link to this heading">¶</a></h2>
 <p>Module for PhaseShift Torch Transform.</p>
@@ -294,6 +327,13 @@ registered hooks while the latter silently ignores them.</p>
 <li><a class="reference internal" href="#module-sigkit.transforms.awgn">sigkit.transforms.awgn module</a><ul>
 <li><a class="reference internal" href="#sigkit.transforms.awgn.ApplyAWGN"><code class="docutils literal notranslate"><span class="pre">ApplyAWGN</span></code></a><ul>
 <li><a class="reference internal" href="#sigkit.transforms.awgn.ApplyAWGN.forward"><code class="docutils literal notranslate"><span class="pre">ApplyAWGN.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sigkit.transforms.frequency_shift">sigkit.transforms.frequency_shift module</a><ul>
+<li><a class="reference internal" href="#sigkit.transforms.frequency_shift.ApplyFrequencyShift"><code class="docutils literal notranslate"><span class="pre">ApplyFrequencyShift</span></code></a><ul>
+<li><a class="reference internal" href="#sigkit.transforms.frequency_shift.ApplyFrequencyShift.forward"><code class="docutils literal notranslate"><span class="pre">ApplyFrequencyShift.forward()</span></code></a></li>
 </ul>
 </li>
 </ul>
