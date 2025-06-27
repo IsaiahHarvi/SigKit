@@ -33,6 +33,12 @@ The notebook is a guide that covers:
 - Visualizing the waveform
 > Be sure to restart your notebook's kernel after installing the package.
 
+### Classification
+There is also an example notebook for running the pretrained model.
+```
+examples/notebooks/classification.ipynb
+```
+> Pull down LFS objects first with `git lfs pull`
 
 
 ## Installing SigKit
@@ -67,22 +73,38 @@ Inside the container you’ll have all dependencies installed and SigKit ready t
 
 ---
 
-## 📦 Features
+## State of Implementations
 
-* **Core** (`src/sigkit/core`):
-  ‣ `Signal` container, `SignalDataset` interface, utility functions (SNR, BER, etc.)
-* **Impairments** (`src/sigkit/impairments`):
-  ‣ Methods to simulate Over-the-air and digital effects on waveforms
-* **Transforms** (`src/sigkit/transforms`):
-  ‣ PyTorch `nn.Module` implementations for **Impairments**
-* **Modems** (`src/sigkit/modem`):
-  ‣ Implementations of various Modulators and Demodulators (FSK, QAM, OFDM, etc.)
-* **Models** (`src/sigkit/moels`):
-  ‣ PyTorch lightning training pipeline and Pretrained models for modulation classification
-* **Datasets** (`src/sigkit/datasets`):
-  ‣ `torch.utils.data.Dataset` bindings
-* **Metrics** (`src/sigkit/metrics`):
-  ‣ SNR, BER, Waveform visualiations, etc.
+The below table tracks major planned features. Smaller features like Signal Impairments and Torch Transforms are not tracked here.
+
+Feature | Implemented | Torch Transform
+--------|-------------|----------------
+**_Architecture_**    |  -   | -
+Rust bindings         |  No  | -
+**_GNURadio_**        |  -   | -
+ClassificationBlock   |  No  | -
+Modulator             |  No  | -
+**Modems**            |  -   | -
+PSK                   | Yes  | -
+FSK                   | Yes  | -
+QAM                   | WIP  | -
+OFDM                  | WIP  | -
+MSK                   | No   | -
+ASK                   | No   | -
+**Machine Learning**  | -    | -
+Training Pipeline     | Yes  | -
+Pretrained Model      | Yes (WIP) | -
+Procedural Dataset    | Yes  | -
+File Dataset          | Yes  | -
+**Signal Impairments**| -    | -
+AWGN                  | Yes  | ✅
+Frequency Shift       | Yes  | ✅
+Phase Shift           | Yes  | ✅
+Polyphase Resampling  | No   | ❌
+Rayleigh Fading       | No   | ❌
+Random Resampling     | No   | ❌
+IQ Imbalance          | No   | ❌
+Time Shift            | No   | ❌
 
 ---
 
