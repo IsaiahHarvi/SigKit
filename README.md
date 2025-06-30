@@ -95,7 +95,7 @@ ASK                   | No   | -
 Training Pipeline     | Yes  | -
 Pretrained Model      | Yes (WIP) | -
 Procedural Dataset    | Yes  | -
-File Dataset          | Yes  | -
+File Dataset          | No  | -
 **Signal Impairments**| -    | -
 AWGN                  | Yes  | ✅
 Frequency Shift       | Yes  | ✅
