@@ -112,7 +112,7 @@ extend-ignore = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["sigkit"]
+include = ["sigkit", "sigkit.*"]
 
 [project.urls]
 Homepage = "https://github.com/IsaiahHarvi/SigKit"
